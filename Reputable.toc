@@ -1,0 +1,16 @@
+## Interface: 20502
+## Title: Reputable
+## Author: Remulos' Revenga
+## Notes: Reputation enhancements and more!
+## Version: 1.29-bcc
+## SavedVariables: Reputable_Data
+
+## X-Curse-Project-ID: 429955
+## X-WoWI-ID: 26061
+
+embeds.xml
+Reputable.lua
+questDB.lua
+variables.lua
+Options.lua
+gui.lua
