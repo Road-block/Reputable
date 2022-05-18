@@ -235,6 +235,10 @@ function Reputable:getInstanceInfo( instanceID, heroic, key )
 				end
 				if not haveHeroicKey then heroicKeyMissing = true end
 			end
+			local heroicQuest = iz.heroicQuest
+			if heroicQuest then
+				requiredQuestComplete = k.quests[ d.heroicQuest ] or false
+			end
 			levelString = LEVEL .." 70|r"
 			if k.profile.level < 70 then
 				colour = '|cFFFF0000'
@@ -560,8 +564,6 @@ function Reputable:addonMessage( message, channel )
 					if a[i].questID  then
 						local questExpires = a[i].timeLeft + 3600 * Reputable_Data.global.dailyDungeons[ Reputable.server ].dailyChangeOffset
 						if questExpires < 86400 then
-						--	debug( a[i].questID, a[i].timeLeft, GetQuestResetTime(), questExpires, nextChange )
-						--	if a[i].timeLeft >= GetQuestResetTime() then
 							if questExpires >= nextChange then
 								if Reputable_Data.global.dailyDungeons[ Reputable.server ][ a[i].name ] == nil or Reputable_Data.global.dailyDungeons[ Reputable.server ][ a[i].name ] ~= a[i].questID then
 									if not Reputable_Data.global.dailyDungeons[ Reputable.server ][ a[i].name .. "Reset" ] or Reputable_Data.global.dailyDungeons[ Reputable.server ][ a[i].name .. "Reset" ] > a[i].timeLeft then
@@ -907,24 +909,14 @@ Reputable:SetScript("OnEvent", function (self, event, ...)
 			if prefix == "REPUTABLE" then
 				if sender ~= Reputable.playerName and sender ~= Reputable.profileKey then
 					debug( "<-", message, channel, sender )
-			--	Reputable:resetDailies()
 					Reputable:addonMessage( message, channel )
 				else
 					debug( "->", message, channel, sender )
 				end
 			end
 		elseif event == "PLAYER_ENTERING_WORLD" then
-	--		if not IsInInstance() then C_Timer.After(10, function() Reputable:sendAddonMessage( false, "YELL", nil ) end ) end
-		--elseif event == "ZONE_CHANGED" then
-		--	Reputable:switchingZones()
-		--	debug( event )
 		elseif event == "ZONE_CHANGED_NEW_AREA" then
-		--	debug( event )
-			--if not IsInInstance() then Reputable:sendAddonMessage( false, "YELL", nil ) end -- Enable if current dailies aren't spreading well to other users
 			Reputable:switchingZones()
-		--elseif event == "ZONE_CHANGED_INDOORS" then
-		--	debug( event )
-		--	Reputable:switchingZones()
 		end
 	end
 end)
@@ -1108,16 +1100,9 @@ function Reputable:initiate()
 				end
 			end
 		end
-		--[[
-		for questID in pairs ( Reputable.questInfo ) do
-			Reputable:getQuestStatus( questID )
-		end--]]
-		
 		
 		Reputable.addonMessagePrefixRegistered = C_ChatInfo.RegisterAddonMessagePrefix("REPUTABLE")
 		C_Timer.After(8, function()
-			--Reputable:addonMessage( false, "GUILD" )
-			--Reputable:sendAddonMessage( false, "GUILD", nil )
 			Reputable:addonMessage()
 		end )
 		Reputable:initOptions()
@@ -1410,6 +1395,9 @@ local function createInstanceToolTip( frame, instanceID, linkData )
 			local haveKey = Reputable_Data[Reputable.profileKey].instances.heroicKeys[ heroicKey ]
 			requirementHeroicKey = "|cffffffff" .. string.gsub( LOCKED_WITH_ITEM, "%%s", heroicKeyLink ) .. "|r" .. Reputable:icons( haveKey )
 			if not haveKey then locked = Reputable:icons( 'lock' ) end
+		end
+		if d.heroicQuest then
+			requirementAccessQuest = "|cffffffff" .. string.gsub( LOCKED_WITH_ITEM, "%%s", BATTLE_PET_SOURCE_2 .. " " .. Reputable:createLink( "quest" , d.heroicQuest, nil, nil, nil, nil ) ) .. "|r" .. Reputable:icons( requiredQuestComplete )
 		end
 	end
 	if d.raid then difficulty = "(" .. RAID .. ")" end

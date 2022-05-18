@@ -102,6 +102,27 @@ function Reputable:tryMakeItemLink( itemID, cat, page, i, icon, pre, post )
 	end
 	return returnLink
 end
+
+function Reputable:tryMakeQuestLink( questID, cat, page, i, icon, pre, post, done)
+	if not pre then pre = "" end
+	if not post then post = "" end
+	local link = Reputable:createLink( "quest" , questID, nil, nil, nil, nil )
+	local doneQuest = ""
+	if icon then
+		doneQuest = Reputable:icons( done, -9 )
+	end
+	local returnLink = pre .. link .. "|r" .. doneQuest .. post
+	if page == "right" then
+		Reputable.guiTabs[ cat ].html[ page ][ i ] = returnLink
+	else
+		local tab
+		if page == 'tab' then tab = true end
+		addLineToHTML( Reputable.guiTabs[ cat ].html, "p", returnLink, tab, nil )
+
+	end
+	return returnLink
+end
+
 Reputable.guiCats = {
 	[ 1 ] = { name = "events", label = BATTLE_PET_SOURCE_7 },
 	[ 2 ] = { name = "dungeons", label = DUNGEONS },
@@ -224,6 +245,10 @@ local function addDungeonToHTML( thisPage, dungeonID, limit, pre, post )
 		allLocks = " "..levelLock .. heroicKeyLock .. accessKeyLock .. accessQuestLock
 		if d.accessKey and thisPage.pagetype ~= "attunement" then
 			Reputable:tryMakeItemLink( d.accessKey, thisPage.name, "right", thisPage.i, true, nil, nil )
+			thisPage.iRight = thisPage.i
+		end
+		if d.heroicQuest and thisPage.pagetype ~= "attunement" then
+			Reputable:tryMakeQuestLink( d.heroicQuest, thisPage.name, "right", thisPage.i, true, nil, nil, requiredQuestComplete)
 			thisPage.iRight = thisPage.i
 		end
 		addLineToHTML( thisPage, "p", pre..Reputable:createLink( "instance" , dungeonID, true, nil, icon, nil )..allLocks..post, true, nil )

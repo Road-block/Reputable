@@ -287,6 +287,7 @@ Reputable.instanceZones = {
 	{ name = "Auchindoun",				abv = "auch", cat = "dungeons", dungeons = { 558, 556, 555 }, heroicKey = 30633, faction = 1011 },
 	{ name = "Caverns of Time",			abv = "cot",  cat = "dungeons", dungeons = { 560, 269 }, 	  heroicKey = 30635, faction = 989 },
 	{ name = "Tempest Keep",			abv = "tk",   cat = "dungeons", dungeons = { 554, 553, 552 }, heroicKey = 30634, faction = 935 },
+	{ name = "Isle of Quel'Danas", abv = "iqd", cat = "dungeons", dungeons = { 585 },  heroicQuest = 11492, faction = 1077 },
 }
 Reputable.instance = {
 	[543] = { mapID = 3562,	zoneMID = 3535,	iz = 1, heroic = true, level = { 58, 60, 62 }, rep = { normal = { max = 8999, rep =  633 }, 																	heroic = { rep = 2500 } }, icon = "Achievement_Boss_OmarTheUnscarred_01" },
@@ -304,6 +305,7 @@ Reputable.instance = {
 	[554] = { mapID = 3849, zoneMID = 3842, iz = 6, heroic = true, level = { 67, 69, 72 }, rep = { normal = { 			  rep = 1620 }, 																	heroic = { rep = 2100 } }, icon = "Achievement_Boss_PathaleonTheCalculator" },
 	[553] = { mapID = 3847, zoneMID = 3842, iz = 6, heroic = true, level = { 67, 70, 72 }, rep = { normal = { 			  rep = 2200 }, 																	heroic = { rep = 3245 } }, icon = "Achievement_Boss_WarpSplinter" },
 	[552] = { mapID = 3848, zoneMID = 3842, iz = 6, heroic = true, level = { 68, 70, 72 }, rep = { normal = { 			  rep = 1800 }, 																	heroic = { rep = 2600 } }, icon = "Achievement_Boss_Harbinger_Skyriss", accessKey = 31084 },
+	[585] = { mapID = 4131, zoneMID = 4095, iz = 7, heroic = true, level = { 69, 70, 72 }, rep = { normal = { 			  rep = 1650 }, 																	heroic = { rep = 2350 } }, icon = "Achievement_Boss_Kael-thasSunstrider_01", heroicQuest = 11492 },
 	[230] = { mapID = 1584,	zoneMID = 25,	level = { 48, 52, 60 } },
 	[229] = { mapID = 1583,	zoneMID = 25,	level = { 48, 55, 60 } },
 	[249] = { mapID = 2159, zoneMID = 15,	level = { 52, 60, 60 }, accessKey = 16309 },
