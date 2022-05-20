@@ -204,16 +204,16 @@ Reputable.repitems = {
 	[17012] = { faction = 59, rep = 300, min = 9000, level = 60, stack = 2 },							-- Core Leather
 	[11382] = { faction = 59, rep = 500, min = 9000, level = 60 },									-- Blood of the Mountain
 -- Shen'dralar
-	[18401] = { faction = 809, rep = 200, reward = {18348}, questID = 7507, quest = { WARRIOR = true, PALADIN = true } },	-- Foror's Compendium of Dragon Slaying
-	[18364] = { faction = 809, rep = 200, reward = {18470}, questID = 7506, quest = { DRUID   = true } },					-- The Emerald Dream
-	[18361] = { faction = 809, rep = 200, reward = {18473}, questID = 7503, quest = { HUNTER  = true } },					-- The Greatest Race of Hunters
-	[18358] = { faction = 809, rep = 200, reward = {18468}, questID = 7500, quest = { MAGE    = true } },					-- The Arcanist's Cookbook
-	[18359] = { faction = 809, rep = 200, reward = {18472}, questID = 7501, quest = { PALADIN = true } },					-- The Light and How to Swing It
-	[18362] = { faction = 809, rep = 200, reward = {18469}, questID = 7504, quest = { PRIEST  = true } },					-- Holy Bologna: What the Light Won't Tell You
-	[18356] = { faction = 809, rep = 200, reward = {18465}, questID = 7498, quest = { ROGUE   = true } },					-- Garona: A Study on Stealth and Treachery
-	[18363] = { faction = 809, rep = 200, reward = {18471}, questID = 7505, quest = { SHAMAN  = true } },					-- Frost Shock and You
-	[18360] = { faction = 809, rep = 200, reward = {18467}, questID = 7502, quest = { WARLOCK = true } },					-- Harnessing Shadows
-	[18357] = { faction = 809, rep = 200, reward = {18466}, questID = 7499, quest = { WARRIOR = true } },					-- Codex of Defense
+	[18401] = { faction = 809, rep = 500, reward = {18348}, questID = 7507, quest = { WARRIOR = true, PALADIN = true } },	-- Nostro's Compendium of Dragon Slaying
+	[18364] = { faction = 809, rep = 500, reward = {18470}, questID = 7506, quest = { DRUID   = true } },					-- The Emerald Dream
+	[18361] = { faction = 809, rep = 500, reward = {18473}, questID = 7503, quest = { HUNTER  = true } },					-- The Greatest Race of Hunters
+	[18358] = { faction = 809, rep = 500, reward = {18468}, questID = 7500, quest = { MAGE    = true } },					-- The Arcanist's Cookbook
+	[18359] = { faction = 809, rep = 500, reward = {18472}, questID = 7501, quest = { PALADIN = true } },					-- The Light and How to Swing It
+	[18362] = { faction = 809, rep = 500, reward = {18469}, questID = 7504, quest = { PRIEST  = true } },					-- Holy Bologna: What the Light Won't Tell You
+	[18356] = { faction = 809, rep = 500, reward = {18465}, questID = 7498, quest = { ROGUE   = true } },					-- Garona: A Study on Stealth and Treachery
+	[18363] = { faction = 809, rep = 500, reward = {18471}, questID = 7505, quest = { SHAMAN  = true } },					-- Frost Shock and You
+	[18360] = { faction = 809, rep = 500, reward = {18467}, questID = 7502, quest = { WARLOCK = true } },					-- Harnessing Shadows
+	[18357] = { faction = 809, rep = 500, reward = {18466}, questID = 7499, quest = { WARRIOR = true } },					-- Codex of Defense
 
 -- PvP
 	[20558] = { faction = { Alliance = 890, Horde = 889 }, level = 15 },								-- Warsong Gulch Mark of Honor
@@ -228,9 +228,9 @@ Reputable.repitems = {
 	[11736] = { quest = 4483, repeatable = true, reward = {11644} },									-- Libram of Resilience
 	[11732] = { quest = 4463, repeatable = true, reward = {11622} },									-- Libram of Rumination
 	[11734] = { quest = 4482, repeatable = true, reward = {11643} },									-- Libram of Tenacity
-	[18332] = { faction = 809, rep = 200, quest = 7483, repeatable = true, reward = {18329} },			-- Libram of Rapidity
-	[18333] = { faction = 809, rep = 200, quest = 7484, repeatable = true, reward = {18330} },			-- Libram of Focus
-	[18334] = { faction = 809, rep = 200, quest = 7485, repeatable = true, reward = {18331} },			-- Libram of Protection
+	[18332] = { faction = 809, rep = 500, quest = 7483, repeatable = true, reward = {18329} },			-- Libram of Rapidity
+	[18333] = { faction = 809, rep = 500, quest = 7484, repeatable = true, reward = {18330} },			-- Libram of Focus
+	[18334] = { faction = 809, rep = 500, quest = 7485, repeatable = true, reward = {18331} },			-- Libram of Protection
 	[ 9250] = { faction = 369, rep = 350, quest = 2876 },												-- Ship Schedules
 	[18969] = { faction = 69,  rep = 250, quest = 7735 },												-- Pristine Yeti Hide
 }
