@@ -1,0 +1,296 @@
+30 May 22
+- Build 1.31 (BCC)
+	* Add Netherwing Quests
+	* Add Shattered Sun Offensive Quests
+	
+18 May 22
+- Build 1.30 (BCC)
+	* Add support for Magister's Terrace in daily rotation and dungeons page including attune quest.
+
+21 Sep 21
+- Build 1.29 (BCC)
+	* Temporarily disabled feature: linking of item to show it's rewards - until I find a better way
+	* Added Brewfest page and fixed counting of dailies due to Brewfest
+	* Now shows progress of alts on specific aldor/scryer quests that have the same criteria
+
+04 Sep 21
+- Build 1.28 (BCC)
+	* Bug fix: GUI not updating
+	* Bug fix: Wrong version of the quest "Akama's Promise" was in the GUI
+	* Bug fix: Reputation standing not showing correctly on LDB
+	* Bug fix: Daily dungeons counted twice
+	* Bug fix: Horde/Alliance icon on accepting/completing PVP quests offset vertically in system message
+	* Some specific quests not being marked as complete/ignored if not able to be completed
+	* Added "Membership Benifits" to The Consortium page - should reset monthly
+	* Note: LDB data source and Minimap now seperate (but identical). May require setting changes in you LDB or Minimap grabbing addons
+
+01 Sep 21
+- Build 1.27 (BCC)
+	* TOC Interface Version updated
+	* Bug fix: Ensures Reputable is fully loaded before running any hooks
+	* Bug fix: Sometimes quests were not showing as "In Progress" on tooltips
+	* Bug fix: Minimap button should now be gathered by minimap addons
+	* Bug fix: Classbooks of abilities that can't be downranked showed as not yet learned
+	* Nightbane should mark as complete once the last quest is complete, even if you destroy the urn
+	* Ony should mark as complete even if you destroy the amulet
+	* Once you pick a Ring from the Violet Eye, the other quests you cannot do get marked complete
+	* Will no longer send/recieve addon messages for a few seconds around reset time
+	* Made quest accepted/completed system messages quest hyperlinks, so you can easy link them / see status of alts
+	* More quest junk
+
+02 Aug 21
+- Build 1.26 (BCC)
+	* Now ignores data from versions before 1.20-bcc
+	* Better quest completion check on login and at resets
+	* Bugfix: Marked quests 11505 & 11506 [Spirits of Auchindoun] as daily
+	* Bugfix: Error on Questie hyperlink if quest is not also in Reputable's DB
+	* Included Ogri'la chain for unlocking dailies on Ogri'la tab
+	* Included attunement chain for Summoning Nightbane
+	* Included attunement chain for Tempest Keep
+	* Included attunement chain for Serpentshrine Cavern
+	* Included unorganized lists of Classic reputation quests, without repeatable quests
+
+26 Jul 21
+- Build 1.25 (BCC)
+	* Bugfix: Further improved load sequence (dailies and progress for tooltips)
+	* Bugfix: Marked quest 11691 [Summon Ahune] as daily
+	* Added feature: Available random dailies to minimap/LDB tooltips (optional)
+	* Added feature: Shift-LeftClick minimap/LDB button to add current dungeon dailies to textbox
+	* Added feature: Mouseover character names in the "All Daily Quests" tab shows which quests they have completed this reset
+
+25 Jul 21
+- Build 1.24 (BCC)
+	* Bugfix: Minimap icon will once again stay away after reload
+	* Bugfix: Load sequence issues resolved (faction spam & quests not showing complete on first load)
+	* Adds alts quest progress to Questie tooltips (optional)
+	* Shows Reputable quest tooltip on Questie Hyperlink mouseover (optional)
+
+24 Jul 21
+- Build 1.23 (BCC)
+	* Bugfix: Reputable-1.22-bcc.lua:1596: bad argument #1 to 'find' (string expected, got nil)
+	* Bugfix: Addon not always loading fully since adding data for all quests
+	* Drastically reduced hidden addon messages
+	* Added "World Events" page for Midsummer Fire Festival
+
+21 Jul 21
+- Build 1.22 (BCC)
+	* Fixed: Horde PvP quest giver now gets horde pvp data (Thank Drejjmit of Questie)
+	* Fixed: Bug with linking abilities from CombatLog
+	* Added all(?) quest data which means all quests should now show reputation rewards
+	* Adjusted random delay in sending hidden addon messages to further reduce the amount of replies
+	* No longer replaces ChatEdit_InsertLink, now uses a securehook
+	* Made modification of the XP bar tooltip optional
+	* Added what your reputation would be after completing quests in Reputables Reputation pages
+	* Added a way to ignore a quest from the totals calculated in Reputables Reputation pages (Ctrl-Click to toggle) Does not save between sessions
+
+14 Jul 21
+- Build 1.21 (BCC)
+	* Fixed: Reputable-1.20-bcc.lua:593: string expected got nil in 'match'
+	* Fixed: Breadcrumb quest Trouble at Auchindoun marked complete if follow up is complete
+	* Added a way to stop tracking a faction (Ctrl click the active faction in blizzards reputation frame)
+	* Made the linking of an items rewards (when linked by itself) optional
+	* Now shows completed daily count on minimap tooltip if no faction is tracked (For current character and any alts that are not at 0)
+
+07 Jul 21
+- Build 1.20 (BCC)
+	* Fixed: Reputable-1.19-bcc.lua:494: attempt to index field 'waitTimer' (a nil value)
+
+07 Jul 21
+- Build 1.19 (BCC)
+	* Fixed: Reputations in blizzards reputation frame can be expanded/collapsed once again
+	* Fixed: Chatframe output was defaulting to ChatFrame1 is selected chatframe wasn't visible
+	* Should no longer needlessly proccess addon messages sent from self
+	* Added a short, random delay in sending hidden addon messages to reduce the amount of replies
+
+28 Jun 21
+- Build 1.18 (BCC)
+	* TOC Update
+
+28 Jun 21
+- Build 1.17 (BCC)
+	* Fixed addon sending too many updates, no longer responds to old versions, throttles sent messages
+	* Fixed total dailies complete count if you've done the PvP daily
+	* Made the showing of item tooltips on hyperlink mouseover optional
+	* More quest junk
+
+26 Jun 21
+- Build 1.16 (BCC)
+	* Fixed error on item hyperlinks
+	* Fixed a quest not marking as complete for horde
+	* Included daily PvP quest (optional)
+	* Included option to toggle daily reset time in local or server times
+	* Attempted to adjust daily resets to when they change on servers (adjustable - check curseforge for details)
+
+20 Jun 21
+- Build 1.15 (BCC)
+	* Fixed bug stopping you from entering BG's
+	* Fixed the quest categories not being collapsible
+	* Added extra check for completed quests/breadcrumb quests
+	* Corrected Karazhan instanceID
+	* More quest junk
+
+17 Jun 21
+- Build 1.14 (BCC)
+	* Fixed the accidentally disabling of showing rep in quest log
+	
+16 Jun 21
+- Build 1.13 (BCC)
+	* Fixed error on loading alts for the first time
+
+16 Jun 21
+- Build 1.12 (BCC)
+	* Included an optional watch faction by zone
+	* Watch faction by zone does not include subzones
+	* Watch faction by zone includes dungeons
+	* Watch faction by zone changes as you enter a zone and should work well with watch faction by last faction change
+	* Fixed minimap/LDB tooltip showing incorrect number of dailies complete (now matches main page)
+	* Put extra check in place to ensure old dailies aren't shared
+	* Replaced an old-style hook with hooksecurefunc to hopefully resolve taint issues
+	* Added a catch for a sometimes nil number
+
+13 Jun 21
+- Build 1.11 (BCC)
+	* Fixed rep missing from quest givers when there were no other rewards
+	* Made rep text in questlog and quest givers match text if changed by other addons
+	* Removed some redundant messages in the hidden addon messages channel
+	* Added TBC classbooks
+	* More quest junk
+
+11 Jun 21
+- Build 1.10 (BCC)
+	* Should fix Reputable-1.09-bcc.lua:423: attempt to compare number with nil
+	* Should fix Reputable.lua:551: attempt to index field '?' (a nil value)
+
+10 Jun 21
+- Build 1.09 (BCC)
+	* Fixed Shattered Halls attunement not marking complete
+	* Fixed Kara attunement not marking complete
+	* Fixed CoT attunement not makring complete
+	* Added Rep gains to questlog and quest givers (If in Reputables database - ie should be all TBC quests) (optional)
+	* Improved syncing of current available dailies (won't share with older versions - tell guildies and friends to update!)
+	* Included cooking and fishing dailies (optional)
+	* Added rep to dungeon dailies
+
+08 Jun 21
+- Build 1.08 (BCC)
+	* Fixed font for Russian client (and other clients?) (Thanks @born2slip and @MrFIXIT - Curseforge)
+	* Added attempt to localize quest names
+
+07 Jun 21
+- Build 1.07 (BCC)
+	* Resolved issue with not been able to link from spell book to macro creation window (Thanks @TeachersPlayTV and @MrFIXIT - Curseforge)
+	* Fixed some unintended global variables (Thanks @MrFIXIT - Curseforge)
+	* Replaced an unnecessary old style function replacement hook with a hooksecurefunc (Thanks @MrFIXIT - Curseforge)
+	* Added more Outland quest junk
+
+05 Jun 21
+- Build 1.06 (BCC)
+	* Bugfix - entering hyperlink (string.match on null)  (Thanks @ersobar - Curseforge)
+
+04 Jun 21
+- Build 1.05 (BCC)
+	* Bugfix - fixed nil error that occurred sometimes as a conflict (Thanks @Shifty - Discord)
+
+03 Jun 21
+- Build 1.04 (BCC)
+	* Bugfix - items on righthand side of GUI were not always lined up correctly
+	* Bugfix - lower level TBC dungeons now show they give rep to the end of friendly
+
+02 Jun 21
+- Build 1.03 (BCC)
+	* Added some more junk quest items
+	* Bugfix - check for nil field (Thanks @Runkel - Discord)
+
+02 Jun 21
+- Build 1.02 (BCC)
+	* Bugfix - check for nil field (Thanks @Runkel - Discord)
+
+01 Jun 21
+- Build 1.01 (BCC)
+	* Update TOC for better addon manager support
+	
+01 Jun 21
+- Build 1.00 (BCC)
+	* First full release
+	* Uses SendAddonMessage to share daily dungeon quests with other users
+	* Saved reset times and dungeons are now per server
+	* Quests linked from GUI now link as 'Questie' links - if you have Questie
+
+30 May 21
+- Build 0.61 (BCC) beta
+	* Bugfix - sometimes there was a 'nil' error on speaking to a questgiver
+	* Added some more junk quest items
+
+26 May 21
+- Build 0.60 (BCC) beta
+	* Created seperate version branch for BCC
+	* Bugfix - fixed an error where tracked reps tooltip sometimes showed wrong faction
+	* Bugfix - fixed displaying if instances are locked
+	* Bugfix - fixed displaying alts on faction/instance tooltips
+	* Now compares reward to currently equipped item (when holding Shift)
+	* Added daily dungeon quests
+	* Added Ogri'la quests
+	* Added Sha'tari Skyguard quests
+	* Set repeatable quests grey if reputation is high
+	* Added option to hide repeatable quests if reputation is high
+	* Adjusted classic era item rep amounts that changed with 2.5.1
+	* More junk items added
+
+18 May 21
+- Build0.50 beta
+	* Major update - GUI added
+	* Countless changes
+
+11 Mar 21
+- Build 0.42 beta
+	* Now shows all item rewards even if class specific
+	* Shows item count on rewards - if you have it
+	* Added battleground marks
+	* Added more quest junk
+	
+20 Feb 21
+- Build 0.41 beta
+	* Fixed critical error from an incorrect default value
+	* Fixed display bug on a tooltip
+	* IsQuestFlaggedCompleted() returns a false negative alot - so added a check to see if you have the reward
+
+17 Feb 21
+- Build 0.40 beta
+	* Added options
+	* Most features can now be toggled
+	* Reworked rep-update event
+	* Added more junk items
+
+08 Jan 21
+- Build 0.31 beta
+	* Bug fix
+	* Couple of items added
+	* Started framework for options panel
+	
+06 Jan 21
+- Build 0.30 beta
+	* Added junk message to quest items that get left in bags (Probably missed lots - can't find a list)
+	* Fixed rouge book Handbook of Deadly Poison V
+	* Added reward tooltip to hyperlink tooltip
+	* Potential bug fixes
+
+24 Dec 20
+- Build 0.22 beta
+	* Removed "Reputable:" from rep change text
+	* Added head/leg enchant librams
+	* Added Encrypted Twilight Texts
+	* Changed AD rep items such as [Bone Fragments] to show if first quest is completed
+	
+22 Dec 20
+- Build 0.21 beta
+	* Fixed error not displaying DM books correctly
+	* Fixed error which could occur after changing versions but not logging on to all characters
+
+22 Dec 20
+- Build 0.20 beta
+	* Added classbooks ( Handbook of Deadly Poison V needs testing - may need different check )
+	* Added DM books ( trinkets and Quel'Serrar )
+
+21 Dec 20
+- Build 0.10 beta
+	* Initial build
