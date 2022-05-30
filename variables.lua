@@ -103,6 +103,8 @@ Reputable.repitems = {
 	[29425] = { faction = 932, rep = 25, level = 58, min = 0, max = 8999},												-- Mark of Kil'jaeden
 	[30809] = { faction = 932, rep = 25, level = 58, min = 0},															-- Mark of Sargeras
 	[29740] = { faction = 932, rep = 350, level = 58, min = 0, reward={29735}},											-- Fel Armament
+-- Netherwing
+	[32506] = { faction = 1015, rep = 250, level = 70, stack = 20}, 													-- Netherwing Egg
 	
 --[[ Original ]]--
 --[[ Raid ]]--
@@ -314,11 +316,9 @@ Reputable.instance = {
 	[544] = { mapID = 3836, zoneMID = 3535, raid = true, level = { 70, 70, 70 } }, -- mag
 	[565] = { mapID = 3923, zoneMID = 3522, raid = true, level = { 70, 70, 70 } }, -- gruul
 	[548] = { name = DUNGEON_FLOOR_COILFANGRESERVOIR1, zoneMID = 3905, raid = true, level = { 70, 70, 70 } }, -- ssc
---[[
-	[564] = { mapID = , zoneMID =  }, -- bt
-	[534] = { mapID = , zoneMID =  }, -- mt hyjal
-	[580] = { mapID = , zoneMID =  }, -- sunwell
---]]
+	[564] = { mapID = 3959, zoneMID = 3520, raid = true, level = { 70, 70, 70 } }, -- bt
+	[534] = { mapID = 3606, zoneMID = 440, raid = true, level = { 70, 70, 70 } }, -- mt hyjal
+	[580] = { mapID = 4075, zoneMID = 4080, raid = true, level = { 70, 70, 70 } }, -- sunwell
 }
 
 Reputable.factionInfo = {
@@ -337,9 +337,26 @@ Reputable.factionInfo = {
 	[  932 ] = { name = "The Aldor", rquests={10019,10327,10326,10655,10654,10421} },
 	[ 1012 ] = { name = "Ashtongue Deathsworn" },
 	[ 1038 ] = { name = "Ogri'la", rquests={11027,11080,11023,11066,11051} },
-	[ 1015 ] = { name = "Netherwing" },
+	[ 1015 ] = { name = "Netherwing", rquests={11015,11018,11017,11016,11020,11035,11050,11076,11077,11055,11086,11101,11097}  },
 	[ 1031 ] = { name = "Sha'tari Skyguard", rquests={11006,11074,11085,11008,11066,11023} },
-	[ 1077 ] = { name = "Shattered Sun Offensive" },
+	[ 1077 ] = { name = "Shattered Sun Offensive", iz = 7 , rquests={
+	11880,11875,11516,11515,11877, -- Permanent
+	
+	-- 11524,11496, -- P1
+	-- 11523,11525,11532,11538, -- P2
+	-- 11523,11525,11533,11536,11537,11544,11542,11539 --P3
+	11523,11525,11533,11536,11537,11544,11542,11543,11540,11541, --P4
+	
+	--11513, -- Portal Closed
+	11547,11514, -- Portal Open
+	
+	--11545, -- Monument locked
+	11548, -- Monument unlocked
+	
+	--11520, -- Alchemist locked
+	11521,11546, -- Alchemist unlocked
+	--
+	} },
 	--[ 69 ] = { rquests={ 7801 }, Horde = false},
 		{ faction = 529	},	-- Arengt Dawn
 --	[ 87	] = { name = "Bloodsail Buccaneers" },
@@ -413,6 +430,8 @@ Reputable.extraQuestInfo = {
 	[  9932 ] = { requires = {9927,9928} },
 	[  9933 ] = { requires = {9932} },
 	[ 10477 ] = { item = 25433, obj = { { "item",25433,10 } } },
+	[ 11049 ] = { item = 32506, obj = { { "item",32506,1 } } },
+	[ 11050 ] = { item = 32506, obj = { { "item",32506,1 } } },
 	[ 10414 ] = { item = 29426, obj = { { "item",29426,1 } } },
 	[ 10415 ] = { item = 29426, obj = { { "item",29426,10 } } },
 	[ 10659 ] = { item = 30810, obj = { { "item",30810,1 } } },
@@ -439,6 +458,8 @@ Reputable.extraQuestInfo = {
 	[ 10983 ] = { breadcrumb = {10984}},
 	[ 10588 ] = { requires = {10523,10541,10579}},
 	[  9067 ] = { breadcrumb = {9395}},
+	[ 11488 ] = { breadcrumb = {11481}},
+	[ 11488 ] = { breadcrumb = {11482}},
 	
 	[ 10732 ] = { breadcrumb = {							10731,10735,10740,10727,	10730,10734,10739,10726,	10729,10733,10738,10725	}},
 	[ 10731 ] = { breadcrumb = {10732,10736,10741,10728,								10730,10734,10739,10726,	10729,10733,10738,10725	}},
@@ -498,6 +519,28 @@ UNLOCK.." "..REPUTATION,
 
 {11027},
 },
+	[ 1015 ] = {
+UNLOCK.." "..REPUTATION,
+{10804,10811,10814,10836,10837,10854,10858,10866,10870},
+"Shadowmoon Valley",
+{11012,11013,11014},
+{11041},
+{11019},
+
+{11049},
+
+{11053,11075,11083,11081,11082,11054},
+
+{11084,11089,11090},
+
+{11099,11094,11100,11095},
+
+{11107,11108},
+"Race",
+{11063,11064,11067,11068,11069,11070,11071},
+},
+	[ 1077 ] = {"Magisters' Terrace",{11481,11488,11490,11492},"Isle of Quel'Danas",{11526,11550,11517}},
+
 --{11102},-- druid version of "Bombing run" -- need to impliment
 
 --	[  529 ] = {
@@ -821,6 +864,9 @@ Reputable.interchangableQuests = {
 	[10640] = 10689,	[10689] = 10640,
 	[10650] = 10691,	[10691] = 10650,
 	[10651] = 10692,	[10692] = 10651,
+	
+	[11099] = 11094,	[11094] = 11099,
+	[11100] = 11095,	[11095] = 11100,
 }
 
 Reputable.membershipBenefits = {
