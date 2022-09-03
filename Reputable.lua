@@ -450,9 +450,10 @@ end
 
 local function sendMessage( sendChannel, message, msgQuests )
 	--if sendChannel == "RAID" then sendChannel = "PARTY" end
-	--local sendChannel = okToSend( sendChannel )
-	if okToSend( sendChannel ) then
-		C_ChatInfo.SendAddonMessage("REPUTABLE", message, okToSend( sendChannel ) )
+	local channel = okToSend( sendChannel )
+	if channel then
+		debug(format("-> bytes:%d, to: %s, at: %d",#message, channel, debugprofilestop())) -- DEBUG
+		C_ChatInfo.SendAddonMessage("REPUTABLE", message, channel )
 		--addonMsgChannels[ sendChannel ].lastMsg = msgQuests
 		--addonMsgChannels[ sendChannel ].lastMsgTime = time()
 	end
@@ -506,12 +507,12 @@ function Reputable:sendAddonMessage( all, channel, ignore, responseNeeded )
 				if all or channel == thisChannel or ( ignore and ignore ~= thisChannel ) then
 					local sendChannel = okToSend( thisChannel )
 					
-					if okToSend( thisChannel ) then
+					if sendChannel then
 						
-						local randomtime = (math.random(500)+100 ) /100
+						local randomtime = (math.random(100,500)+100 ) /100
 						addonMsgChannels[ thisChannel ].lastMsg = msgQuests
 						addonMsgChannels[ thisChannel ].lastMsgTime = time() + randomtime
-						addonMsgChannels[ thisChannel ].waitTimer = C_Timer.NewTimer(randomtime, function() sendMessage( thisChannel, message, msgQuests ) end )
+						addonMsgChannels[ thisChannel ].waitTimer = C_Timer.NewTimer(randomtime, function() sendMessage( sendChannel, message, msgQuests ) end )
 					end
 				end
 			end
@@ -551,7 +552,7 @@ function Reputable:addonMessage( message, channel )
 				Reputable.needOldVersionMessage = false
 			end
 			
-			if sentBuild > 1.20 then
+			if sentBuild >= 1.29 then
 			
 				local recievedChannel = channel
 				if recievedChannel == "RAID" then recievedChannel = "PARTY" end
@@ -576,10 +577,8 @@ function Reputable:addonMessage( message, channel )
 							end
 						end
 					elseif Reputable_Data.global.dailyDungeons[ Reputable.server ][ a[i].name ] then
-					--	if sentBuild > 1.15 then
-							respond = channel
-							responseNeeded = true
-					--	end
+						respond = channel
+						responseNeeded = true
 					end
 				end
 			
@@ -1703,7 +1702,10 @@ Reputable.createFactionToolTip = function ( frame, factionID, mmtt )
 		Reputable.addDailiesToToolTip( tt )
 	end
 
-	local factionName,factionDescription ,factionStanding,barMin,barMax,value = GetFactionInfoByID( factionID );
+	local factionName,factionDescription ,factionStanding,barMin,barMax,value, _, _, isHeader, _, hasRep = GetFactionInfoByID( factionID );
+
+	if isHeader and not hasRep then return end
+	
 	if not factionName then
 		if Reputable.factionInfo[ factionID ] then factionName = Reputable.factionInfo[ factionID ].name else factionName = "Unknown Faction" end
 		factionDescription = ""
@@ -2347,6 +2349,7 @@ local function repBarOnEnter( self, ... )
 	if not Reputable.initiated then return end
 	local name, description, standingId, barMin, barMax, earnedValue, atWarWith, canToggleAtWar,
 				isHeader, isCollapsed, hasRep, isWatched, isChild, factionID, hasBonusRepGain, canBeLFGBonus = GetFactionInfo(self.index)
+	if isHeader and not hasRep then return end
 	if factionID then
 		createFactionToolTip( self, factionID, nil )
 		local note = "|cFFffd100•|r|cFF8080FF Ctrl-Click to watch faction|r"
@@ -2521,22 +2524,31 @@ hooksecurefunc("QuestLog_UpdateQuestDetails", function()
 			if questLogRepString ~= "" then 
 				questLogRepFrame:Show()
 			--	questLogRepFrame.text:SetTextColor( QuestFont:GetTextColor() )
-				questLogRepFrame.text:SetTextColor( QuestLogQuestDescription:GetTextColor() )
-				
-				local anchorFrame = QuestLogRewardTitleText
-				if not QuestLogRewardTitleText:IsVisible() then
-					QuestLogRewardTitleText:Show()
+				local textColor = QuestLogQuestDescription and QuestLogQuestDescription:GetTextColor()
+				if not textColor then 
+					textColor = QuestInfoDescriptionText and QuestInfoDescriptionText:GetTextColor()
 				end
-				if QuestLogMoneyFrame:IsVisible() then
-					anchorFrame = QuestLogMoneyFrame
+				questLogRepFrame.text:SetTextColor( textColor )
+				
+				local anchorFrame = QuestLogRewardTitleText or QuestInfoRewardsFrame.Header
+				if not anchorFrame:IsVisible() then
+					anchorFrame:Show()
+				end
+				local anchorFrame2 = QuestLogMoneyFrame or QuestInfoMoneyFrame
+				if anchorFrame2:IsVisible() then
+					anchorFrame = anchorFrame2
 				end
 				for i = 1, 10 do
-					local thisItemFrame = _G[ "QuestLogItem".. i ]
-					if thisItemFrame:IsVisible() and thisItemFrame:GetBottom() < anchorFrame:GetBottom() then anchorFrame = thisItemFrame end
+					local thisItemFrame = _G[ "QuestLogItem".. i ] or _G[ "QuestInfoRewardsFrameQuestInfoItem".. i ]
+					if thisItemFrame and anchorFrame and thisItemFrame:IsVisible() 
+						and thisItemFrame:GetBottom() and anchorFrame:GetBottom() 
+						and thisItemFrame:GetBottom() < anchorFrame:GetBottom() then 
+							anchorFrame = thisItemFrame 
+					end
 				end
 				questLogRepFrame.text:SetText( questLogRepString )
 				questLogRepFrame:SetPoint( "TOP", anchorFrame, "BOTTOM", 0, -5 );
-				QuestFrame_SetAsLastShown(questLogRepFrame)
+				if QuestFrame_SetAsLastShown then QuestFrame_SetAsLastShown(questLogRepFrame) end
 			end
 		end
 	end

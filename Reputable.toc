@@ -1,8 +1,8 @@
-## Interface: 20504
+## Interface: 30400
 ## Title: Reputable
 ## Author: Remulos' Revenga
 ## Notes: Reputation enhancements and more!
-## Version: 1.31-bcc
+## Version: 1.33-bcc
 ## SavedVariables: Reputable_Data
 
 ## X-Curse-Project-ID: 429955
