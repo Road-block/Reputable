@@ -2505,6 +2505,38 @@ end
 		--	addQuestToHTML( pageName, questID, repIncrease, nil )
 		--end
 
+local childFrames = {
+"Header","ArtifactXPFrame","XPFrame","MoneyFrame","TalentFrame","TitleFrame","SkillPointFrame",
+"HonorFrame","ArenaPointsFrame"
+}
+local function getAnchorFrame()
+	local anchorFrame = QuestInfoRewardsFrame[childFrames[1]]
+	local lastFrame
+	if anchorFrame and not anchorFrame:IsVisible() then anchorFrame:Show() end
+	for i=2,7 do
+		lastFrame = QuestInfoRewardsFrame and QuestInfoRewardsFrame[childFrames[i]]
+		if lastFrame and anchorFrame and lastFrame:IsVisible()
+		and lastFrame:GetBottom() < anchorFrame:GetBottom() then
+			anchorFrame = lastFrame
+		end
+	end
+	for i=1,#QuestInfoRewardsFrame.RewardButtons do
+		lastFrame = _G["QuestInfoRewardsFrameQuestInfoItem".. i]
+		if lastFrame and anchorFrame and lastFrame:IsVisible() and lastFrame:GetBottom()
+			and lastFrame:GetBottom() < anchorFrame:GetBottom() then
+			anchorFrame = lastFrame
+		end
+	end
+	for i=8,9 do
+		lastFrame = QuestInfoRewardsFrame and QuestInfoRewardsFrame[childFrames[i]]
+		if lastFrame and anchorFrame and lastFrame:IsVisible()
+			and lastFrame:GetBottom() < anchorFrame:GetBottom() then
+			anchorFrame = lastFrame
+		end
+	end
+	return anchorFrame
+end
+
 hooksecurefunc("QuestLog_UpdateQuestDetails", function()
 	if not Reputable.initiated then return end
 	questLogRepFrame:Hide()
@@ -2529,26 +2561,9 @@ hooksecurefunc("QuestLog_UpdateQuestDetails", function()
 					textColor = QuestInfoDescriptionText and QuestInfoDescriptionText:GetTextColor()
 				end
 				questLogRepFrame.text:SetTextColor( textColor )
-				
-				local anchorFrame = QuestLogRewardTitleText or QuestInfoRewardsFrame.Header
-				if not anchorFrame:IsVisible() then
-					anchorFrame:Show()
-				end
-				local anchorFrame2 = QuestLogMoneyFrame or QuestInfoMoneyFrame
-				if anchorFrame2:IsVisible() then
-					anchorFrame = anchorFrame2
-				end
-				for i = 1, 10 do
-					local thisItemFrame = _G[ "QuestLogItem".. i ] or _G[ "QuestInfoRewardsFrameQuestInfoItem".. i ]
-					if thisItemFrame and anchorFrame and thisItemFrame:IsVisible() 
-						and thisItemFrame:GetBottom() and anchorFrame:GetBottom() 
-						and thisItemFrame:GetBottom() < anchorFrame:GetBottom() then 
-							anchorFrame = thisItemFrame 
-					end
-				end
 				questLogRepFrame.text:SetText( questLogRepString )
-				questLogRepFrame:SetPoint( "TOP", anchorFrame, "BOTTOM", 0, -5 );
-				if QuestFrame_SetAsLastShown then QuestFrame_SetAsLastShown(questLogRepFrame) end
+				local anchorFrame = getAnchorFrame()
+				if anchorFrame then questLogRepFrame:SetPoint( "TOP", anchorFrame, "BOTTOM", 0, -5 ) end
 			end
 		end
 	end
