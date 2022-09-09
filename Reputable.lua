@@ -452,7 +452,7 @@ local function sendMessage( sendChannel, message, msgQuests )
 	--if sendChannel == "RAID" then sendChannel = "PARTY" end
 	local channel = okToSend( sendChannel )
 	if channel then
-		debug(format("-> bytes:%d, to: %s, at: %d",#message, channel, debugprofilestop())) -- DEBUG
+		--debug(format("-> bytes:%d, to: %s, at: %d",#message, channel, debugprofilestop())) -- DEBUG
 		C_ChatInfo.SendAddonMessage("REPUTABLE", message, channel )
 		--addonMsgChannels[ sendChannel ].lastMsg = msgQuests
 		--addonMsgChannels[ sendChannel ].lastMsgTime = time()
@@ -652,7 +652,7 @@ function Reputable:getQuestLog( needsRefresh )
 								if desc then questProgress = string.match(desc,': (.*)') or "" end
 								if questProgress == "0/1" then questProgress = "" end
 							else
-								questProgress = questProgress .. " • " .. desc .. "\n"
+								questProgress = questProgress .. " • " .. (desc or "") .. "\n"
 							end
 						end
 					end
