@@ -1,9 +1,29 @@
-30 May 22
+28 Oct 22 (Schoppi)
+- Build 1.36 (WOTLK)
+	* Updated Quest Database
+	* Some rework at Code
+	* Added events File
+
+10 Sep 22 (Roadblock)
+- Build 1.35 (BCC)
+  * Fix errors from empty quest objective descriptions
+
+04 Sep 22 (Roadblock)
+- Build 1.34 (BCC)
+  * Questlog Rep Reward anchoring fixed
+
+03 Sep 22 (Roadblock)
+- Build 1.33 (BCC)
+  * Wotlk prepatch fixes
+  * Questlog headers
+  * Reputation headers
+
+30 May 22 (herrebert, boktai)
 - Build 1.31 (BCC)
 	* Add Netherwing Quests
 	* Add Shattered Sun Offensive Quests
 	
-18 May 22
+18 May 22 (Roadblock)
 - Build 1.30 (BCC)
 	* Add support for Magister's Terrace in daily rotation and dungeons page including attune quest.
 

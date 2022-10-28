@@ -67,7 +67,7 @@ local function createMenuBTN( frame, name, text )
 	frame.y = frame.y - 20
 end
 
-local function addLineToHTML( page, tag, text, tab, i )
+function Reputable:addLineToHTML( page, tag, text, tab, i )
 	local index = page.i
 	if i then index = i end
 	if not page.main[ index ] then page.main[ index ] = {} end
@@ -97,7 +97,7 @@ function Reputable:tryMakeItemLink( itemID, cat, page, i, icon, pre, post )
 	else
 		local tab
 		if page == 'tab' then tab = true end
-		addLineToHTML( Reputable.guiTabs[ cat ].html, "p", returnLink, tab, nil )
+		Reputable:addLineToHTML( Reputable.guiTabs[ cat ].html, "p", returnLink, tab, nil )
 		
 	end
 	return returnLink
@@ -117,26 +117,13 @@ function Reputable:tryMakeQuestLink( questID, cat, page, i, icon, pre, post, don
 	else
 		local tab
 		if page == 'tab' then tab = true end
-		addLineToHTML( Reputable.guiTabs[ cat ].html, "p", returnLink, tab, nil )
+		Reputable:addLineToHTML( Reputable.guiTabs[ cat ].html, "p", returnLink, tab, nil )
 
 	end
 	return returnLink
 end
 
-Reputable.guiCats = {
-	[ 1 ] = { name = "events", label = BATTLE_PET_SOURCE_7 },
-	[ 2 ] = { name = "dungeons", label = DUNGEONS },
-	[ 3 ] = { name = "reputations", label = REPUTATION },
-	[ 4 ] = { name = "attunements", label = "Attunements" },
-	[ 5 ] = { name = "reputationsC", label = EXPANSION_NAME0.." "..REPUTATION },
-	[ 6 ] = { name = "reputationsUnsorted", label = EXPANSION_NAME0.." (Unsorted)" },
-	[ 7 ] = { name = "attunementsC", label = EXPANSION_NAME0.." Attunements" },
-}
-Reputable.guiTabs = {
-	{ name = "midsummer",	title = "Midsummer Fire Festival",	label = "Midsummer Fire Festival", cat = 1 },
-	{ name = "brewfest",	title = "Brewfest",	label = "Brewfest", cat = 1 },
-	{ name = "dungeons",	title = EXPANSION_NAME1 .. " " .. DUNGEONS, 	label = EXPANSION_NAME1, cat = 2 },
-	{ name = "dailies", 	title = ALL.." "..DAILY.." "..QUESTS_LABEL, label = ALL.." "..DAILY.." "..QUESTS_LABEL, cat = 3 },
+local tbcFactionList = {
 	{ faction =  946 },
 	{ faction =  947 },
 	{ faction =  942 },
@@ -155,18 +142,8 @@ Reputable.guiTabs = {
 	{ faction = 1038 },
 	{ faction = 1015 },
 	{ faction = 1077 },
-	{ instance = 532 },
-	{ instance = "Nightbane" },
-	{ instance = 555 },
-	{ instance = 552 },
-	{ instance = 269 },
-	{ instance = 540 },
-	{ instance = 550 },
-	{ instance = 548 },
-	--{ instance = 249, cat = 6 }, -- testing (ony)
-	--{ faction =  529 }, -- testing argentdawn
-	--{ faction =  69, cat = 6 }, -- testing darnassus
 }
+
 local classicFactionList = {
 	{ faction = 529	},	-- Arengt Dawn
 --	{ faction = 87	},	-- Bloodsail Buccaneers
@@ -201,25 +178,64 @@ local classicFactionList = {
 --	{ faction = 589	},	-- Wintersaber Trainers
 	{ faction = 270	},	-- Zandalar Tribe
 }
+
+local wotlkFactionList = {
+	{ faction = 1050 }, --Valiance Expedition
+	{ faction = 1052 }, --Horde Expedition
+	{ faction = 1064 }, --The Taunka
+	{ faction = 1067 }, --The Hand of Vengeance
+	{ faction = 1068 }, --Explorers' League
+	{ faction = 1073 }, --The Kalu'ak
+	{ faction = 1085 }, --Warsong Offensive
+	{ faction = 1090 }, --Kirin Tor
+	{ faction = 1091 }, --The Wyrmrest Accord
+	{ faction = 1094 }, --The Silver Covenant
+	{ faction = 1098 }, --Knights of the Ebon Blade
+	{ faction = 1104 }, --Frenzyheart Tribe
+	{ faction = 1105 }, --The Oracles
+	{ faction = 1106 }, --Argent Crusade
+	{ faction = 1119 }, --The Sons of Hodir
+	{ faction = 1124 }, --The Sunreavers
+	{ faction = 1126 }, --The Frostborn
+	
+	-- { faction = 1097	] = { name = "Wrath of the Lich King" },
+	-- { faction = 1117	] = { name = "Sholazar Basin" },
+	-- { faction = 1118	] = { name = "Classic" },	
+}
+
+local wotlkFactionPages = {}
+for _,f in ipairs( wotlkFactionList ) do
+	wotlkFactionPages[ f.faction ] = true
+	table.insert(Reputable.guiTabs, {faction = f.faction, cat = 2} )
+end
+
+local tbcFactionPages = {}
+for _,f in ipairs( tbcFactionList ) do
+	tbcFactionPages[ f.faction ] = true
+	table.insert(Reputable.guiTabs, {faction = f.faction, cat = 3} )
+end
+
 local classicFactionPages = {}
 for _,f in ipairs( classicFactionList ) do
 	--print( k,v, classicFactionList[ k ].faction )
 	--print( f.faction)
 	classicFactionPages[ f.faction ] = true
-	table.insert(Reputable.guiTabs, {faction = f.faction, cat = 6} )
-end
-local classicAttunePages = { [249]=true }
-for instanceID in pairs( classicAttunePages ) do
-	table.insert(Reputable.guiTabs, {instance = instanceID, cat = 7} )
+	table.insert(Reputable.guiTabs, {faction = f.faction, cat = 4} )
 end
 
+local classicAttunePages = {}
+for instanceID in pairs( Reputable.attunements ) do
+	classicAttunePages[ instanceID ] = true
+	table.insert(Reputable.guiTabs, {instance = instanceID, cat = 6} )
+end
+	
 local htmlLayers = {
 	["main"]  = { margin = { 20,  0 } },
 	["tab1"]  = { margin = { 40,  0 } },
 	["right"] = { margin = {  0, 20 } },
 }
 
-local function addDungeonToHTML( thisPage, dungeonID, limit, pre, post )
+function Reputable:addDungeonToHTML( thisPage, dungeonID, limit, pre, post )
 	local showNormal = true
 	local showHeroic = true
 	if not pre then pre = "" end
@@ -239,7 +255,7 @@ local function addDungeonToHTML( thisPage, dungeonID, limit, pre, post )
 	if requiredQuestComplete == false then accessQuestLock = Reputable:icons( 'lock', -9 ) end
 	allLocks = " "..levelLock .. accessKeyLock .. accessQuestLock
 	if showNormal then
-		addLineToHTML( thisPage, "p", pre..Reputable:createLink( "instance" , dungeonID, false, nil, icon, nil )..allLocks..post, true, nil )
+		Reputable:addLineToHTML( thisPage, "p", pre..Reputable:createLink( "instance" , dungeonID, false, nil, icon, nil )..allLocks..post, true, nil )
 	end
 	if d.heroic and showHeroic then
 		local colour, levelTooLow, levelString, requiredQuestComplete, accessKeyMissing, heroicKeyMissing = Reputable:getInstanceInfo( dungeonID, true, nil )
@@ -253,39 +269,45 @@ local function addDungeonToHTML( thisPage, dungeonID, limit, pre, post )
 			Reputable:tryMakeQuestLink( d.heroicQuest, thisPage.name, "right", thisPage.i, true, nil, nil, requiredQuestComplete)
 			thisPage.iRight = thisPage.i
 		end
-		addLineToHTML( thisPage, "p", pre..Reputable:createLink( "instance" , dungeonID, true, nil, icon, nil )..allLocks..post, true, nil )
+		Reputable:addLineToHTML( thisPage, "p", pre..Reputable:createLink( "instance" , dungeonID, true, nil, icon, nil )..allLocks..post, true, nil )
 	end
 end
-	
-local function makeDungeonHTMLlist ( cat, zoneInfo )
-	local thisPage = Reputable.guiTabs[ cat ].html
-	local factionID = zoneInfo.faction
-	if type(factionID) == 'table' then factionID = zoneInfo.faction[ playerFaction ] end
-	local factionPage = false
-	if Reputable.guiTabs[ "faction"..factionID] then factionPage = Reputable.guiTabs[ "faction"..factionID].html end
-	local factionLink = Reputable:createLink( "faction" , factionID, nil, nil, nil, nil )
-	local heroicKey = zoneInfo.heroicKey
-	if heroicKey then
-		if type(heroicKey) == 'table' then heroicKey = heroicKey[ playerFaction ] end
-		Reputable:tryMakeItemLink( heroicKey, cat, "right", thisPage.i, true, nil, nil )
-		thisPage.iRight = thisPage.i
-		if factionPage then
-			Reputable:tryMakeItemLink( heroicKey, factionPage.name, "right", factionPage.i, true, nil, nil )
-			factionPage.iRight = factionPage.i
+
+local function makeDungeonHTMLlist ()
+	for _, zoneInfo in ipairs ( Reputable.instanceZones ) do
+		local cat = zoneInfo.cat
+			--Reputable.guiTabs[ zoneInfo.cat ].html
+			--makeDungeonHTMLlist ( zoneInfo.cat, zoneInfo )
+		
+		local thisPage = Reputable.guiTabs[ cat ].html
+		local factionID = zoneInfo.faction
+		if type(factionID) == 'table' then factionID = zoneInfo.faction[ playerFaction ] end
+		local factionPage = false
+		if Reputable.guiTabs[ "faction"..factionID] then factionPage = Reputable.guiTabs[ "faction"..factionID].html end
+		local factionLink = Reputable:createLink( "faction" , factionID, nil, nil, nil, nil )
+		local heroicKey = zoneInfo.heroicKey
+		if heroicKey then
+			if type(heroicKey) == 'table' then heroicKey = heroicKey[ playerFaction ] end
+			Reputable:tryMakeItemLink( heroicKey, cat, "right", thisPage.i, true, nil, nil )
+			thisPage.iRight = thisPage.i
+			if factionPage then
+				Reputable:tryMakeItemLink( heroicKey, factionPage.name, "right", factionPage.i, true, nil, nil )
+				factionPage.iRight = factionPage.i
+			end
 		end
+		if factionPage then Reputable:addLineToHTML( factionPage, "p", Reputable.instanceZones[ Reputable.factionInfo[ factionID ].iz ].name .. " " .. factionLink, nil, nil ) end
+		Reputable:addLineToHTML( Reputable.guiTabs[cat].html, "p", zoneInfo.name .. " " .. factionLink, nil, nil )
+		for _, dungeonID in ipairs ( zoneInfo.dungeons ) do
+			Reputable:getInstanceStatus( dungeonID )
+			Reputable:addDungeonToHTML( thisPage, dungeonID, 2, nil, nil )
+			if factionPage then Reputable:addDungeonToHTML( factionPage, dungeonID, 2, nil, nil ) end
+		end
+		if factionPage then Reputable:addLineToHTML( factionPage, "p", "<br/>", nil, nil ) end
+		Reputable:addLineToHTML( Reputable.guiTabs[zoneInfo.cat].html, "p", "<br/>", nil, nil )
 	end
-	if factionPage then addLineToHTML( factionPage, "p", Reputable.instanceZones[ Reputable.factionInfo[ factionID ].iz ].name .. " " .. factionLink, nil, nil ) end
-	addLineToHTML( Reputable.guiTabs[cat].html, "p", zoneInfo.name .. " " .. factionLink, nil, nil )
-	for _, dungeonID in ipairs ( zoneInfo.dungeons ) do
-		Reputable:getInstanceStatus( dungeonID )
-		addDungeonToHTML( thisPage, dungeonID, 2, nil, nil )
-		if factionPage then addDungeonToHTML( factionPage, dungeonID, 2, nil, nil ) end
-	end
-	if factionPage then addLineToHTML( factionPage, "p", "<br/>", nil, nil ) end
-	addLineToHTML( Reputable.guiTabs[zoneInfo.cat].html, "p", "<br/>", nil, nil )
 end
 	
-local function addQuestToHTML( page, questID, repInc, factionID, showLocation )
+function Reputable:addQuestToHTML( page, questID, repInc, factionID, showLocation )
 	local q = Reputable.questInfo[ questID ]
 	if q then
 		if q[2] ~= Reputable.notFactionInt[ playerFaction ] then
@@ -319,9 +341,9 @@ local function addQuestToHTML( page, questID, repInc, factionID, showLocation )
 				if showThisDaily then
 					if factionID and not page.dailyFactionHeader[factionID] then
 						page.dailyFactionHeader[factionID] = true
-						addLineToHTML( page, "p", "<br/>", nil, nil )
+						Reputable:addLineToHTML( page, "p", "<br/>", nil, nil )
 						local reputationString = Reputable:getRepString( Reputable_Data[Reputable.profileKey].factions[factionID] )
-						addLineToHTML( page, "p", Reputable:createLink( "faction", factionID, nil, nil, nil, nil ) .. " " .. reputationString, nil, nil )
+						Reputable:addLineToHTML( page, "p", Reputable:createLink( "faction", factionID, nil, nil, nil, nil ) .. " " .. reputationString, nil, nil )
 					end
 				end
 			end
@@ -338,7 +360,7 @@ local function addQuestToHTML( page, questID, repInc, factionID, showLocation )
 			
 			if showThisDaily and ( Reputable_Data.global.guiShowCompletedQuests or not complete ) then
 			--	if debug() then repStr = repStr.." || "..q[6] end
-				addLineToHTML( page, "p", Reputable:icons( progressIcon, -9 ) .. " " .. Reputable:createLink( "quest" , questID,nil,nil,nil,factionID, -8 ) .. repStr .. progress, true, nil )
+				Reputable:addLineToHTML( page, "p", Reputable:icons( progressIcon, -9 ) .. " " .. Reputable:createLink( "quest" , questID,nil,nil,nil,factionID, -8 ) .. repStr .. progress, true, nil )
 				page.lastWasHeader = false
 			end
 		end
@@ -358,7 +380,7 @@ local function addPlayerToDailiesPage( key, show )
 				local line = "|cffffff00("..dailyCount.." / "..GetMaxDailyQuests()..")|r ".. color..k.profile.name.."|r"
 			--	if dailyList ~= "" then line = "|Hreputable:dailiesList:"..key.."|h"..line.."|h" end
 				line = "|Hreputable:dailiesList:"..key.."|h"..line.."|h"
-				addLineToHTML( Reputable.guiTabs[ "dailies" ].html, "p", line, true, nil )
+				Reputable:addLineToHTML( Reputable.guiTabs[ "dailies" ].html, "p", line, true, nil )
 			end
 		end
 	end
@@ -377,15 +399,19 @@ local function makeDataForAllPages()
 	--	end
 	end
 	debug( "makeDataForAllPages() fired")
-	for _, zoneInfo in ipairs ( Reputable.instanceZones ) do
+	
+	--for _, zoneInfo in ipairs ( Reputable.instanceZones ) do
 		--Reputable.guiTabs[ zoneInfo.cat ].html
-		makeDungeonHTMLlist ( zoneInfo.cat, zoneInfo )
-	end
+		--makeDungeonHTMLlist ( zoneInfo.cat, zoneInfo )
+	--end
+	
+	makeDungeonHTMLlist()
+	
 	local dailiesPage = Reputable.guiTabs[ "dailies" ].html
 	dailiesPage.dailyFactionHeader = {}
 
 	if GetDailyQuestsCompleted() >= GetMaxDailyQuests() then 
-		addLineToHTML( dailiesPage, "p", "|cFFFF0000"..NO_DAILY_QUESTS_REMAINING.."|r", nil, nil )
+		Reputable:addLineToHTML( dailiesPage, "p", "|cFFFF0000"..NO_DAILY_QUESTS_REMAINING.."|r", nil, nil )
 	end
 	
 	local timestamp = time() + GetQuestResetTime() + 1
@@ -410,7 +436,7 @@ local function makeDataForAllPages()
 		end
 		--GameTooltip:AddLine( " " )
 	end
-	addLineToHTML( dailiesPage, "p", "<br/>", nil, nil )
+	Reputable:addLineToHTML( dailiesPage, "p", "<br/>", nil, nil )
 	
 	--	guiShowFishingDaily = true,
 	--	guiShowCookingDaily = true,
@@ -418,59 +444,79 @@ local function makeDataForAllPages()
 	--	guiShowHeroicDaily = true,
 	
 	if Reputable_Data.global.guiShowNormalDaily then
-		addLineToHTML( dailiesPage, "p", "|cffffff00"..LFG_TYPE_DAILY_DUNGEON.."|r", nil, nil )
+		Reputable:addLineToHTML( dailiesPage, "p", "|cffffff00"..LFG_TYPE_DAILY_DUNGEON.."|r", nil, nil )
 		if Reputable_Data.global.dailyDungeons[ server ].dailyNormalDungeon then
-			addDungeonToHTML( dailiesPage, Reputable.dailyInfo[ Reputable_Data.global.dailyDungeons[ server ].dailyNormalDungeon ].instanceID, 0, nil, nil)
-			addQuestToHTML( dailiesPage, Reputable_Data.global.dailyDungeons[ server ].dailyNormalDungeon, nil, nil )
+			Reputable:addDungeonToHTML( dailiesPage, Reputable.dailyInfo[ Reputable_Data.global.dailyDungeons[ server ].dailyNormalDungeon ].instanceID, 0, nil, nil)
+			Reputable:addQuestToHTML( dailiesPage, Reputable_Data.global.dailyDungeons[ server ].dailyNormalDungeon, nil, nil )
 		else
-			addLineToHTML( dailiesPage, "p", "|cff808080[ "..UNKNOWN.." - Speak with Nether-Stalker Mah'duun in Shattrath City ]|r", true, nil)
+			Reputable:addLineToHTML( dailiesPage, "p", "|cff808080[ "..UNKNOWN.." - Speak with Nether-Stalker Mah'duun in Shattrath City ]|r", true, nil)
 		end
-		addLineToHTML( dailiesPage, "p", "<br/>", nil, nil )
+		Reputable:addLineToHTML( dailiesPage, "p", "<br/>", nil, nil )
 	end
 	
 	if Reputable_Data.global.guiShowHeroicDaily then
-		addLineToHTML( dailiesPage, "p", "|cffffff00"..LFG_TYPE_DAILY_HEROIC_DUNGEON.."|r", nil, nil )
+		Reputable:addLineToHTML( dailiesPage, "p", "|cffffff00"..LFG_TYPE_DAILY_HEROIC_DUNGEON.."|r", nil, nil )
 		if Reputable_Data.global.dailyDungeons[ server ].dailyHeroicDungeon then
-			addDungeonToHTML( dailiesPage, Reputable.dailyInfo[ Reputable_Data.global.dailyDungeons[ server ].dailyHeroicDungeon ].instanceID, 1, nil, nil)
-			addQuestToHTML( dailiesPage, Reputable_Data.global.dailyDungeons[ server ].dailyHeroicDungeon, nil, nil )
+			Reputable:addDungeonToHTML( dailiesPage, Reputable.dailyInfo[ Reputable_Data.global.dailyDungeons[ server ].dailyHeroicDungeon ].instanceID, 1, nil, nil)
+			Reputable:addQuestToHTML( dailiesPage, Reputable_Data.global.dailyDungeons[ server ].dailyHeroicDungeon, nil, nil )
 		else
-			addLineToHTML( dailiesPage, "p", "|cff808080[ "..UNKNOWN.." - Speak with Wind Trader Zhareem in Shattrath City ]|r", true, nil)
+			Reputable:addLineToHTML( dailiesPage, "p", "|cff808080[ "..UNKNOWN.." - Speak with Wind Trader Zhareem in Shattrath City ]|r", true, nil)
 		end
-		addLineToHTML( dailiesPage, "p", "<br/>", nil, nil )
+		Reputable:addLineToHTML( dailiesPage, "p", "<br/>", nil, nil )
 	end
 	
 	if Reputable_Data.global.guiShowCookingDaily then
-		addLineToHTML( dailiesPage, "p", "|cffffff00"..PROFESSIONS_COOKING.." "..DAILY.."|r", nil, nil )
+		Reputable:addLineToHTML( dailiesPage, "p", "|cffffff00"..PROFESSIONS_COOKING.." "..DAILY.."|r", nil, nil )
 		if Reputable_Data.global.dailyDungeons[ server ].dailyCookingQuest then
-			addQuestToHTML( dailiesPage, Reputable_Data.global.dailyDungeons[ server ].dailyCookingQuest, nil, nil )
+			Reputable:addQuestToHTML( dailiesPage, Reputable_Data.global.dailyDungeons[ server ].dailyCookingQuest, nil, nil )
 		else
-			addLineToHTML( dailiesPage, "p", "|cff808080[ "..UNKNOWN.." - Speak with The Rokk in Shattrath City ]|r", true, nil)
+			Reputable:addLineToHTML( dailiesPage, "p", "|cff808080[ "..UNKNOWN.." - Speak with The Rokk in Shattrath City ]|r", true, nil)
 		end
-		addLineToHTML( dailiesPage, "p", "<br/>", nil, nil )
+		Reputable:addLineToHTML( dailiesPage, "p", "<br/>", nil, nil )
+	end
+	
+	if Reputable_Data.global.guiShowWotlkCookingDaily then
+		Reputable:addLineToHTML( dailiesPage, "p", "|cffffff00"..PROFESSIONS_COOKING.." Wotlk "..DAILY.."|r", nil, nil )
+		if Reputable_Data.global.dailyDungeons[ server ].dailyWotlkCookingQuest then
+			Reputable:addQuestToHTML( dailiesPage, Reputable_Data.global.dailyDungeons[ server ].dailyWotlkCookingQuest, nil, nil )
+		else
+			Reputable:addLineToHTML( dailiesPage, "p", "|cff808080[ "..UNKNOWN.." - Speak with The Rokk in Shattrath City ]|r", true, nil)
+		end
+		Reputable:addLineToHTML( dailiesPage, "p", "<br/>", nil, nil )
 	end
 	
 	if Reputable_Data.global.guiShowFishingDaily then
-		addLineToHTML( dailiesPage, "p", "|cffffff00"..PROFESSIONS_FISHING.." "..DAILY.."|r", nil, nil )
+		Reputable:addLineToHTML( dailiesPage, "p", "|cffffff00"..PROFESSIONS_FISHING.." "..DAILY.."|r", nil, nil )
 		if Reputable_Data.global.dailyDungeons[ server ].dailyFishingQuest then
-			addQuestToHTML( dailiesPage, Reputable_Data.global.dailyDungeons[ server ].dailyFishingQuest, nil, nil )
+			Reputable:addQuestToHTML( dailiesPage, Reputable_Data.global.dailyDungeons[ server ].dailyFishingQuest, nil, nil )
 		else
-			addLineToHTML( dailiesPage, "p", "|cff808080[ "..UNKNOWN.." - Speak with Old Man Barlo in Terokkar Forest ]|r", true, nil)
+			Reputable:addLineToHTML( dailiesPage, "p", "|cff808080[ "..UNKNOWN.." - Speak with Old Man Barlo in Terokkar Forest ]|r", true, nil)
 		end
-		addLineToHTML( dailiesPage, "p", "<br/>", nil, nil )
+		Reputable:addLineToHTML( dailiesPage, "p", "<br/>", nil, nil )
+	end
+	
+	if Reputable_Data.global.guiShowWotlkFishingDaily then
+		Reputable:addLineToHTML( dailiesPage, "p", "|cffffff00"..PROFESSIONS_FISHING.." Wotlk "..DAILY.." |r", nil, nil )
+		if Reputable_Data.global.dailyDungeons[ server ].dailyWotlkFishingQuest then
+			Reputable:addQuestToHTML( dailiesPage, Reputable_Data.global.dailyDungeons[ server ].dailyWotlkFishingQuest, nil, nil )
+		else
+			Reputable:addLineToHTML( dailiesPage, "p", "|cff808080[ "..UNKNOWN.." - Speak with Marcia Chase in Dalaran ]|r", true, nil)
+		end
+		Reputable:addLineToHTML( dailiesPage, "p", "<br/>", nil, nil )
 	end
 	
 	if Reputable_Data.global.guiShowPvPDaily then
-		addLineToHTML( dailiesPage, "p", "|cffffff00"..PVP.." "..DAILY.."|r", nil, nil )
+		Reputable:addLineToHTML( dailiesPage, "p", "|cffffff00"..PVP.." "..DAILY.."|r", nil, nil )
 		if Reputable_Data.global.dailyDungeons[ server ].dailyPvPQuest then
-			addQuestToHTML( dailiesPage, Reputable_Data.global.dailyDungeons[ server ].dailyPvPQuest, nil, nil )
+			Reputable:addQuestToHTML( dailiesPage, Reputable_Data.global.dailyDungeons[ server ].dailyPvPQuest, nil, nil )
 		else
 			if playerFaction == 'Alliance' then
-				addLineToHTML( dailiesPage, "p", "|cff808080[ "..UNKNOWN.." - Speak with an Alliance Brigadier General ]|r", true, nil)
+				Reputable:addLineToHTML( dailiesPage, "p", "|cff808080[ "..UNKNOWN.." - Speak with an Alliance Brigadier General ]|r", true, nil)
 			else
-				addLineToHTML( dailiesPage, "p", "|cff808080[ "..UNKNOWN.." - Speak with a Horde Warbringer ]|r", true, nil)
+				Reputable:addLineToHTML( dailiesPage, "p", "|cff808080[ "..UNKNOWN.." - Speak with a Horde Warbringer ]|r", true, nil)
 			end
 		end
-		addLineToHTML( dailiesPage, "p", "<br/>", nil, nil )
+		Reputable:addLineToHTML( dailiesPage, "p", "<br/>", nil, nil )
 	end
 	
 	for _, v in ipairs ( Reputable.guiTabs ) do
@@ -486,45 +532,49 @@ local function makeDataForAllPages()
 				Reputable.gui.menu[ "menuBTN_" .. v.name ]:SetNormalFontObject( "GameFontGreenSmall" )
 			end
 			
+			--consortium monthly gems
 			if v.faction == 933 then
 				local consortiumStanding = Reputable_Data[ Reputable.profileKey ].factions[933] or 0
-				addLineToHTML( factionPage, "h2", CALENDAR_REPEAT_MONTHLY.." "..SCENARIO_BONUS_REWARD, nil, nil )
-				--addLineToHTML( factionPage, "h2", consortiumStanding, nil, nil )
+				Reputable:addLineToHTML( factionPage, "h2", CALENDAR_REPEAT_MONTHLY.." "..SCENARIO_BONUS_REWARD, nil, nil )
+				--Reputable:addLineToHTML( factionPage, "h2", consortiumStanding, nil, nil )
 				if consortiumStanding >= 42000 then
-					addQuestToHTML( factionPage, 9887, nil, nil, nil, nil ) -- e
+					Reputable:addQuestToHTML( factionPage, 9887, nil, nil, nil, nil ) -- e
 				elseif consortiumStanding >= 21000 then
-					addQuestToHTML( factionPage, 9885, nil, nil, nil, nil ) -- r
+					Reputable:addQuestToHTML( factionPage, 9885, nil, nil, nil, nil ) -- r
 				elseif consortiumStanding >= 9000 then
-					addQuestToHTML( factionPage, 9884, nil, nil, nil, nil ) -- h
+					Reputable:addQuestToHTML( factionPage, 9884, nil, nil, nil, nil ) -- h
 				else
-					addQuestToHTML( factionPage, 9886, nil, nil, nil, nil ) -- f
+					Reputable:addQuestToHTML( factionPage, 9886, nil, nil, nil, nil ) -- f
 				end
-				addLineToHTML( factionPage, "p", "<br/>", nil, nil )
+				Reputable:addLineToHTML( factionPage, "p", "<br/>", nil, nil )
 			end
 			
+			--check for repeatable quests
 			if Reputable.factionInfo[ v.faction ].rquests then
 				if Reputable_Data.global.guiShowExaltedDailies or not Reputable_Data[Reputable.profileKey].factions[v.faction] or Reputable_Data[Reputable.profileKey].factions[v.faction] < 42000 then
-					addLineToHTML( factionPage, "h2", "Repeatable " .. QUESTS_COLON, nil, nil )
+					Reputable:addLineToHTML( factionPage, "h2", "Repeatable " .. QUESTS_COLON, nil, nil )
 					for _, questID in ipairs( Reputable.factionInfo[ v.faction ].rquests ) do
 						local q = Reputable.questInfo[ questID ]
 						if q then
 							local repInc = 0
 							if v.faction == q[5][1] then repInc = q[5][2] elseif v.faction == q[5][3] then repInc = q[5][4] end
-							addQuestToHTML( factionPage, questID, repInc, v.faction, nil, nil )
+							Reputable:addQuestToHTML( factionPage, questID, repInc, v.faction, nil, nil )
 						else
 							debug("Repeatable quest missing from questDB", questID)
 						end
 					end
-					addLineToHTML( factionPage, "p", "<br/>", nil, nil )
+					Reputable:addLineToHTML( factionPage, "p", "<br/>", nil, nil )
 				end
 			end
+			
+			
 			if Reputable.questByFaction[ v.faction ] then
 				factionPage.questCounter = { factionPage.i, 0, 0, 0, 0 } factionPage.i = factionPage.i + 1
 				for _, chain in ipairs ( Reputable.questByFaction[ v.faction ] ) do
 					if type( chain ) == 'string' then
 						if factionPage.lastWasHeader then factionPage.i = factionPage.i - 1 end
 						factionPage.lastWasHeader = true
-						addLineToHTML( factionPage, "h2", chain .. " " .. QUESTS_COLON, nil, nil )
+						Reputable:addLineToHTML( factionPage, "h2", chain .. " " .. QUESTS_COLON, nil, nil )
 					else
 						for _, questID in ipairs ( chain ) do
 							local levelColor, complete, inProgress, progressIcon, levelMin, levelTooLow, levelString, minF, minR, maxF, maxR, repTooLow, repTooHigh, requiredQuestComplete = Reputable:getQuestInfo( questID, nil, nil )
@@ -536,7 +586,7 @@ local function makeDataForAllPages()
 									local repInc = 0
 									if v.faction == q[5][1] then repInc = q[5][2] elseif v.faction == q[5][3] then repInc = q[5][4] end
 									if ( q[12] ~= 1 or requiredQuestComplete == false ) and not repTooHigh then
-										addQuestToHTML( factionPage, questID, repInc, v.faction, nil, nil )
+										Reputable:addQuestToHTML( factionPage, questID, repInc, v.faction, nil, nil )
 									end
 									if q[12] ~= 1 and not repTooHigh and not ingoredQuestForRep then
 										factionPage.questCounter[3] = factionPage.questCounter[3] + 1
@@ -548,7 +598,7 @@ local function makeDataForAllPages()
 									end
 									
 									if q[13] == 1 then	
-										addQuestToHTML( dailiesPage, questID, repInc, v.faction, nil, nil )
+										Reputable:addQuestToHTML( dailiesPage, questID, repInc, v.faction, nil, nil )
 									end
 								end
 							else debug("Quest missing from questDB", questID)
@@ -570,9 +620,9 @@ local function makeDataForAllPages()
 					
 				end
 				local counterRepStr = " |cFF8080FF ( " .. Reputable:repWithMultiplier(factionPage.questCounter[4], nil) .. " / ".. Reputable:repWithMultiplier(factionPage.questCounter[5], nil) .. " )|r ".. remainingRepStr
-				addLineToHTML( factionPage, "h2", counterStr .. counterRepStr, false, factionPage.questCounter[1] )
-				addLineToHTML( factionPage, "p", "<br/>", nil, nil )
-				addLineToHTML( factionPage, "p", "<br/>", nil, nil )
+				Reputable:addLineToHTML( factionPage, "h2", counterStr .. counterRepStr, false, factionPage.questCounter[1] )
+				Reputable:addLineToHTML( factionPage, "p", "<br/>", nil, nil )
+				Reputable:addLineToHTML( factionPage, "p", "<br/>", nil, nil )
 				
 				if factionPage.questCounter[2] == factionPage.questCounter[3] then
 					--label = label..Reputable:icons( 'tick' )
@@ -613,7 +663,7 @@ local function makeDataForAllPages()
 		if not attunementComplete or Reputable_Data.global.guiShowCompletedQuests then
 			if data.requirements then
 				if data.requirements.reputation then
-					addLineToHTML( page, "p", string.gsub( LOCKED_WITH_ITEM, "%%s", REPUTATION..":" ), nil, nil )
+					Reputable:addLineToHTML( page, "p", string.gsub( LOCKED_WITH_ITEM, "%%s", REPUTATION..":" ), nil, nil )
 					for _, reputation in ipairs ( data.requirements.reputation ) do
 						local factionName = GetFactionInfoByID( reputation[1] )
 						if not factionName then
@@ -627,31 +677,31 @@ local function makeDataForAllPages()
 						if Reputable_Data[Reputable.profileKey].factions[reputation[1]] then
 							currentRepStr = Reputable:getRepString( Reputable_Data[Reputable.profileKey].factions[reputation[1]] )
 						end
-						addLineToHTML( page, "p", "|cFF8080FF|Hreputable:faction:" .. reputation[1] .. "|h" .. repReqStr .. currentRepStr .. "|h|r", true, nil )
+						Reputable:addLineToHTML( page, "p", "|cFF8080FF|Hreputable:faction:" .. reputation[1] .. "|h" .. repReqStr .. currentRepStr .. "|h|r", true, nil )
 					end
-					addLineToHTML( page, "p", "<br/>", nil, nil )
+					Reputable:addLineToHTML( page, "p", "<br/>", nil, nil )
 				end
 				if data.requirements.dungeons then
-					addLineToHTML( page, "p", string.gsub( LOCKED_WITH_ITEM, "%%s", DUNGEONS..":" ), nil, nil )
+					Reputable:addLineToHTML( page, "p", string.gsub( LOCKED_WITH_ITEM, "%%s", DUNGEONS..":" ), nil, nil )
 					for _, dungeon in ipairs ( data.requirements.dungeons ) do
-						addDungeonToHTML( page, dungeon[1], dungeon[2], nil, nil )
+						Reputable:addDungeonToHTML( page, dungeon[1], dungeon[2], nil, nil )
 					end
-					addLineToHTML( page, "p", "<br/>", nil, nil )
+					Reputable:addLineToHTML( page, "p", "<br/>", nil, nil )
 				end
 				if data.requirements.items then
-					addLineToHTML( page, "p", string.gsub( LOCKED_WITH_ITEM, "%%s", ITEMS..":" ), nil, nil )
+					Reputable:addLineToHTML( page, "p", string.gsub( LOCKED_WITH_ITEM, "%%s", ITEMS..":" ), nil, nil )
 					for _, item in ipairs ( data.requirements.items ) do
 						Reputable:tryMakeItemLink( item[1], pageName, "tab", page.i, false, "", "|cffffd100 x"..item[2] )
 					end
-					addLineToHTML( page, "p", "<br/>", nil, nil )
+					Reputable:addLineToHTML( page, "p", "<br/>", nil, nil )
 				end
 			end
 			if data.chain then
-				addLineToHTML( page, "p", "Attunement:", nil, nil )
+				Reputable:addLineToHTML( page, "p", "Attunement:", nil, nil )
 				local pieceStart = page.i
 				for _, piece in ipairs ( data.chain ) do
 					if type( piece ) == 'number' then
-						addQuestToHTML( page, piece, nil, nil )
+						Reputable:addQuestToHTML( page, piece, nil, nil )
 					elseif type( piece ) == 'string' then
 					
 					elseif piece[1] ~= Reputable.notFactionInt[ playerFaction ] then
@@ -662,10 +712,10 @@ local function makeDataForAllPages()
 							if i == 1 then first = true end
 							if piece[i-1] == 1 or piece[i-1] == 2 then first = true end
 							if bit ~= Reputable.factionInt[ playerFaction ] then
-								if first and pieceStart ~= bitStart then addLineToHTML( page, "p", "<br/>", nil, nil ) end
+								if first and pieceStart ~= bitStart then Reputable:addLineToHTML( page, "p", "<br/>", nil, nil ) end
 								if type( bit ) == 'number' then
 									if Reputable_Data[ Reputable.profileKey ].quests[ bit ] == true then bitComplete = true end
-									addQuestToHTML( page, bit, nil, nil )
+									Reputable:addQuestToHTML( page, bit, nil, nil )
 								else
 									local stepType = bit:sub(1, 1)
 									local stepNumber = bit:sub(2)
@@ -678,7 +728,7 @@ local function makeDataForAllPages()
 											difficulty = 0
 									--		difficultyType = CHAT_MSG_INSTANCE_CHAT
 										end
-										addDungeonToHTML( page, tonumber( stepNumber:sub(2) ), difficulty, difficultyType .. ": ", nil )
+										Reputable:addDungeonToHTML( page, tonumber( stepNumber:sub(2) ), difficulty, difficultyType .. ": ", nil )
 									elseif stepType == 'a' then
 										if playerFaction == 'Alliance' then step = stepNumber end
 									elseif stepType == 'h' then
@@ -686,129 +736,35 @@ local function makeDataForAllPages()
 									else
 										step = bit
 									end
-									if step then addLineToHTML( page, "h2", "|cffffd100 " .. step, true, nil ) end
+									if step then Reputable:addLineToHTML( page, "h2", "|cffffd100 " .. step, true, nil ) end
 								end
 							end
 						end
 						if bitComplete and not Reputable_Data.global.guiShowCompletedQuests then page.i = bitStart end
 					end
 				end
-				addLineToHTML( page, "p", "<br/>", nil, nil )
-				addLineToHTML( page, "p", "<br/>", nil, nil )
+				Reputable:addLineToHTML( page, "p", "<br/>", nil, nil )
+				Reputable:addLineToHTML( page, "p", "<br/>", nil, nil )
 			end
 		else
-			addLineToHTML( page, "p", SPLASH_BOOST_HEADER, true, nil )
+			Reputable:addLineToHTML( page, "p", SPLASH_BOOST_HEADER, true, nil )
 		end
 	end
 	
 	if Reputable.brewfest then
-		local pageName = Reputable.guiTabs[ "brewfest" ].html
-		Reputable.brewfestCurrencyBags = GetItemCount(37829)
-		Reputable.brewfestCurrencyTotal = GetItemCount(37829, true)
-		local currencyString = "|cffffff00"..Reputable.brewfestCurrencyTotal
-		if Reputable.brewfestCurrencyTotal > Reputable.brewfestCurrencyBags then
-			currencyString = currencyString.." ("..INVTYPE_BAG..": "..Reputable.brewfestCurrencyBags..", "..BANK..": "..Reputable.brewfestCurrencyTotal - Reputable.brewfestCurrencyBags..")"
-		end
-		addLineToHTML( pageName, "p", "<br/>", nil, nil )
-		Reputable:tryMakeItemLink( 37829, pageName.name, "right", pageName.i, nil, nil, nil ); pageName.iRight = pageName.i
-		addLineToHTML( pageName, "p", BATTLE_PET_SOURCE_7.." "..CURRENCY..": "..currencyString.."|r", nil, nil )
-		addLineToHTML( pageName, "p", "<br/>", nil, nil )				
-		addLineToHTML( pageName, "h2", "Repeatable " .. QUESTS_COLON, nil, nil )
-		
-		addLineToHTML( dailiesPage, "p", "<br/>", nil, nil )
-		addLineToHTML( dailiesPage, "p", "|cffffff00"..BATTLE_PET_SOURCE_7..": Brewfest|r", nil, nil )		
-		for _, questID in ipairs( Reputable.questByGroup["Brewfest"].dailies ) do
-			addQuestToHTML( pageName, questID, nil, nil )
-			addQuestToHTML( dailiesPage, questID, nil, nil )
-		end
-		
-		addLineToHTML( pageName, "p", "<br/>", nil, nil )
-		for _, chain in ipairs ( Reputable.questByGroup["Brewfest"].quests ) do
-			if type( chain ) == 'string' then
-				if pageName.lastWasHeader then pageName.i = pageName.i - 1 end
-				pageName.lastWasHeader = true
-				local header = ""
-				local stepType, stepValue, stepDefault = strsplit(":", chain)
-				if stepType == 'm' then header = ( C_Map.GetAreaInfo( stepValue ) or stepDefault ) .. ":" else header = chain .. ":" end
-				addLineToHTML( pageName, "h2", header, nil, nil )
-			else
-				for _, questID in ipairs ( chain ) do
-					local levelColor, complete, inProgress, progressIcon, levelMin, levelTooLow, levelString, minF, minR, maxF, maxR, repTooLow, repTooHigh, requiredQuestComplete = Reputable:getQuestInfo( questID, nil, nil )
-					local q = Reputable.questInfo[ questID ]
-					if q then
-						if Reputable.questInfo[ questID ][2] ~= Reputable.notFactionInt[ playerFaction ] then
-							if ( q[12] ~= 1 or requiredQuestComplete == false ) and not repTooHigh then
-								addQuestToHTML( pageName, questID, nil, nil, true )
-							end
-						end
-					else debug("Quest missing from questDB", questID)
-					end
-				end
-			end
-		end
-		addLineToHTML( pageName, "p", "<br/>", nil, nil )
-		addLineToHTML( pageName, "p", "<br/>", nil, nil )
+		Reputable:addBrewfest()
+	end
+	
+	if Reputable.HallowsEnd then
+		Reputable:addHallowsEnd()
 	end
 	
 	if Reputable.midsummer then
-		local pageName = Reputable.guiTabs[ "midsummer" ].html
-		Reputable.midsummerCurrencyBags = GetItemCount(23247)
-		Reputable.midsummerCurrencyTotal = GetItemCount(23247, true)
-		local currencyString = "|cffffff00"..Reputable.midsummerCurrencyTotal
-		if Reputable.midsummerCurrencyTotal > Reputable.midsummerCurrencyBags then
-			currencyString = currencyString.." ("..INVTYPE_BAG..": "..Reputable.midsummerCurrencyBags..", "..BANK..": "..Reputable.midsummerCurrencyTotal - Reputable.midsummerCurrencyBags..")"
-		end
-		addLineToHTML( pageName, "p", "<br/>", nil, nil )
-		Reputable:tryMakeItemLink( 23247, pageName.name, "right", pageName.i, nil, nil, nil ); pageName.iRight = pageName.i
-		addLineToHTML( pageName, "p", BATTLE_PET_SOURCE_7.." "..CURRENCY..": "..currencyString.."|r", nil, nil )
-		addLineToHTML( pageName, "p", "<br/>", nil, nil )			
-		addLineToHTML( pageName, "h2", "Repeatable " .. QUESTS_COLON, nil, nil )
-		
-		addLineToHTML( dailiesPage, "p", "<br/>", nil, nil )
-		addLineToHTML( dailiesPage, "p", "|cffffff00"..BATTLE_PET_SOURCE_7..": Midsummer Fire Festival|r", nil, nil )		
-		for _, questID in ipairs( Reputable.questByGroup["Midsummer_fire_festival"].dailies ) do
-			if questID == 11954 then
-				if level >= 65 then
-				elseif level >= 54 then questID = 11953 elseif level >= 45 then questID = 11952 elseif level >= 39 then questID = 11948 elseif level >= 26 then questID = 11947 else questID = 11917 end
-			end
-			addQuestToHTML( pageName, questID, nil, nil )
-			addQuestToHTML( dailiesPage, questID, nil, nil )
-		end
-		
-		addLineToHTML( pageName, "p", "<br/>", nil, nil )
-		for _, chain in ipairs ( Reputable.questByGroup["Midsummer_fire_festival"].quests ) do
-			if type( chain ) == 'string' then
-				if pageName.lastWasHeader then pageName.i = pageName.i - 1 end
-				pageName.lastWasHeader = true
-				local header = ""
-				local stepType, stepValue, stepDefault = strsplit(":", chain)
-				if stepType == 'm' then header = ( C_Map.GetAreaInfo( stepValue ) or stepDefault ) .. ":" else header = chain .. ":" end
-				addLineToHTML( pageName, "h2", header, nil, nil )
-			else
-				for _, questID in ipairs ( chain ) do
-					if questID == 11954 then
-						if level >= 65 then
-						elseif level >= 54 then questID = 11953 elseif level >= 45 then questID = 11952 elseif level >= 39 then questID = 11948 elseif level >= 26 then questID = 11947 else questID = 11917 end
-					end
-					local levelColor, complete, inProgress, progressIcon, levelMin, levelTooLow, levelString, minF, minR, maxF, maxR, repTooLow, repTooHigh, requiredQuestComplete = Reputable:getQuestInfo( questID, nil, nil )
-					local q = Reputable.questInfo[ questID ]
-					if q then
-						if Reputable.questInfo[ questID ][2] ~= Reputable.notFactionInt[ playerFaction ] then
-							if ( q[12] ~= 1 or requiredQuestComplete == false ) and not repTooHigh then
-								addQuestToHTML( pageName, questID, nil, nil, true )
-							end
-						end
-					else debug("Quest missing from questDB", questID)
-					end
-				end
-			end
-		end
-		addLineToHTML( pageName, "p", "<br/>", nil, nil )
-		addLineToHTML( pageName, "p", "<br/>", nil, nil )
+		Reputable:addMidsummer()
 	end
 	
-	addLineToHTML( dailiesPage, "p", "<br/>", nil, nil )
-	addLineToHTML( dailiesPage, "p", "<br/>", nil, nil )
+	Reputable:addLineToHTML( dailiesPage, "p", "<br/>", nil, nil )
+	Reputable:addLineToHTML( dailiesPage, "p", "<br/>", nil, nil )
 	
 	--classicFactionPages
 	for questID in pairs ( Reputable.questInfo ) do
@@ -817,24 +773,24 @@ local function makeDataForAllPages()
 		local repIncrease = q[5][2]
 		if q[12] ~= 1 and q[6] > 0 then
 			if classicFactionPages[ q[5][1] ] then
-				addQuestToHTML( Reputable.guiTabs[ "faction"..q[5][1] ].html, questID, repIncrease, nil, true )
+				Reputable:addQuestToHTML( Reputable.guiTabs[ "faction"..q[5][1] ].html, questID, repIncrease, nil, true )
 			elseif q[5][1] == 67 then	-- Horde
-				addQuestToHTML( Reputable.guiTabs[ "faction911" ].html, questID, repIncrease, nil, true )
-				addQuestToHTML( Reputable.guiTabs[ "faction76"  ].html, questID, repIncrease, nil, true )
-				addQuestToHTML( Reputable.guiTabs[ "faction530" ].html, questID, repIncrease, nil, true )
-				addQuestToHTML( Reputable.guiTabs[ "faction68"  ].html, questID, repIncrease, nil, true )
-				addQuestToHTML( Reputable.guiTabs[ "faction81"  ].html, questID, repIncrease, nil, true )
+				Reputable:addQuestToHTML( Reputable.guiTabs[ "faction911" ].html, questID, repIncrease, nil, true )
+				Reputable:addQuestToHTML( Reputable.guiTabs[ "faction76"  ].html, questID, repIncrease, nil, true )
+				Reputable:addQuestToHTML( Reputable.guiTabs[ "faction530" ].html, questID, repIncrease, nil, true )
+				Reputable:addQuestToHTML( Reputable.guiTabs[ "faction68"  ].html, questID, repIncrease, nil, true )
+				Reputable:addQuestToHTML( Reputable.guiTabs[ "faction81"  ].html, questID, repIncrease, nil, true )
 			elseif q[5][1] == 469 then	-- Alliance
-				addQuestToHTML( Reputable.guiTabs[ "faction930" ].html, questID, repIncrease, nil, true )
-				addQuestToHTML( Reputable.guiTabs[ "faction69"  ].html, questID, repIncrease, nil, true )
-				addQuestToHTML( Reputable.guiTabs[ "faction72"  ].html, questID, repIncrease, nil, true )
-				addQuestToHTML( Reputable.guiTabs[ "faction47"  ].html, questID, repIncrease, nil, true )
-				addQuestToHTML( Reputable.guiTabs[ "faction54"  ].html, questID, repIncrease, nil, true )
+				Reputable:addQuestToHTML( Reputable.guiTabs[ "faction930" ].html, questID, repIncrease, nil, true )
+				Reputable:addQuestToHTML( Reputable.guiTabs[ "faction69"  ].html, questID, repIncrease, nil, true )
+				Reputable:addQuestToHTML( Reputable.guiTabs[ "faction72"  ].html, questID, repIncrease, nil, true )
+				Reputable:addQuestToHTML( Reputable.guiTabs[ "faction47"  ].html, questID, repIncrease, nil, true )
+				Reputable:addQuestToHTML( Reputable.guiTabs[ "faction54"  ].html, questID, repIncrease, nil, true )
 			elseif q[5][1] == 169 then	-- Steamwheedle Cartel
-				addQuestToHTML( Reputable.guiTabs[ "faction21"  ].html, questID, repIncrease, nil, true )
-				addQuestToHTML( Reputable.guiTabs[ "faction577" ].html, questID, repIncrease, nil, true )
-				addQuestToHTML( Reputable.guiTabs[ "faction369" ].html, questID, repIncrease, nil, true )
-				addQuestToHTML( Reputable.guiTabs[ "faction470" ].html, questID, repIncrease, nil, true )
+				Reputable:addQuestToHTML( Reputable.guiTabs[ "faction21"  ].html, questID, repIncrease, nil, true )
+				Reputable:addQuestToHTML( Reputable.guiTabs[ "faction577" ].html, questID, repIncrease, nil, true )
+				Reputable:addQuestToHTML( Reputable.guiTabs[ "faction369" ].html, questID, repIncrease, nil, true )
+				Reputable:addQuestToHTML( Reputable.guiTabs[ "faction470" ].html, questID, repIncrease, nil, true )
 			end
 		end
 	end
@@ -842,8 +798,8 @@ local function makeDataForAllPages()
 		if Reputable_Data[Reputable.profileKey].factions[f] and Reputable_Data[Reputable.profileKey].factions[f] >= 42000 then
 			Reputable.gui.menu[ "menuBTN_" .. "faction"..f ]:SetNormalFontObject( "GameFontGreenSmall" )
 		end
-		addLineToHTML( Reputable.guiTabs[ "faction"..f ].html, "p", "<br/>", nil, nil )
-		addLineToHTML( Reputable.guiTabs[ "faction"..f ].html, "p", "<br/>", nil, nil )
+		Reputable:addLineToHTML( Reputable.guiTabs[ "faction"..f ].html, "p", "<br/>", nil, nil )
+		Reputable:addLineToHTML( Reputable.guiTabs[ "faction"..f ].html, "p", "<br/>", nil, nil )
 	end
 	
 	Reputable.guiNeedsUpdate = false
@@ -986,9 +942,12 @@ local function createGUI( page )
 	--	layer:SetScript("OnHyperlinkClick", function(self, link, text, button) SetItemRef(link, text) Reputable:setFactionFromHyperLink( link ) end);
 		layer:SetScript("OnHyperlinkClick", function(self, link, text, button) Reputable:insertChatLink( link, text, button ) Reputable:setFactionFromHyperLink( link ) end);
 	end
-		
+	
+
+	
 	for k, v in ipairs ( Reputable.guiTabs ) do
-		if v.name ~= 'midsummer' or ( v.name == 'midsummer' and Reputable.midsummer ) then
+		--if v.name ~= 'midsummer' or ( v.name == 'midsummer' and Reputable.midsummer ) then
+		--if v.name ~= 'HallowsEnd' or ( v.name == 'HallowsEnd' and Reputable.HallowsEnd ) then
 			local title = v.title
 			local pagetype = ""
 			if v.faction then
@@ -997,7 +956,7 @@ local function createGUI( page )
 				title = REPUTATION .. " " .. Reputable:createLink( "faction", v.faction, nil, nil, nil, nil )
 				v.label = Reputable.factionInfo[ v.faction ].name
 				v.name = "faction" .. v.faction
-				if not v.cat then v.cat = 3 end
+				if not v.cat then v.cat = 2 end
 			elseif v.instance then
 				if type( v.instance ) == 'number' then
 					if Reputable.attunements[ v.instance ].name then
@@ -1011,7 +970,7 @@ local function createGUI( page )
 				if not title then title = "Instance: "..v.instance end
 				v.label = title
 				v.name = "attune" .. v.instance
-				if not v.cat then v.cat = 4 end
+				if not v.cat then v.cat = 6 end
 				pagetype = "attunement"
 			end
 			
@@ -1036,7 +995,7 @@ local function createGUI( page )
 				end
 				createMenuBTN( cont.menu, v.name, v.label )
 			end
-		end
+		--end
 	end
 	cont.main:SetHeight( 200 );
 	cont.menu:SetHeight( 30 - cont.menu.y );

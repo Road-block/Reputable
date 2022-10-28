@@ -4,10 +4,11 @@ addon.a = Reputable
 
 Reputable.midsummer = false
 Reputable.brewfest = false
+Reputable.HallowsEnd = false
 local today = tonumber(date("%m%d", time()))
 if today > 620 and today < 706 then Reputable.midsummer = true end 
 if today > 919 and today < 1007 then Reputable.brewfest = true end 
-
+if today > 1018 and today < 1101 then Reputable.HallowsEnd = true end
 local resetAllDataVersion = 1.05
 
 Reputable.playerName = UnitName("player")
@@ -471,7 +472,7 @@ function Reputable:sendAddonMessage( all, channel, ignore, responseNeeded )
 	if ignore and ignore == "RAID" then ignore = "PARTY" end
 	local action = "send"
 	local missingData = false
-	local dND, dNDR, dHD, dHDR, dCQ, dCQR, dFQ, dFQR, dPvPQ, dPvPQR = "", "", "", "", "", "", "", "", "", ""
+	local dND, dNDR, dHD, dHDR, dCQ, dCQR, dFQ, dFQR, dPvPQ, dPvPQR, dWCQ, dWCQR, dWFQ, dWFQR = "", "", "", "", "", "", "", "", "", "", "", "", "", ""
 	
 	if Reputable_Data.global.dailyDungeons[ Reputable.server ].dailyNormalDungeon then
 		dND    = Reputable_Data.global.dailyDungeons[ Reputable.server ].dailyNormalDungeon
@@ -485,19 +486,27 @@ function Reputable:sendAddonMessage( all, channel, ignore, responseNeeded )
 		dCQ    = Reputable_Data.global.dailyDungeons[ Reputable.server ].dailyCookingQuest
 		dCQR   = Reputable_Data.global.dailyDungeons[ Reputable.server ].dailyCookingQuestReset
 	end
+	if Reputable_Data.global.dailyDungeons[ Reputable.server ].dailyWotlkCookingQuest then
+		dWCQ    = Reputable_Data.global.dailyDungeons[ Reputable.server ].dailyWotlkCookingQuest
+		dWCQR   = Reputable_Data.global.dailyDungeons[ Reputable.server ].dailyWotlkCookingQuestReset
+	end
 	if Reputable_Data.global.dailyDungeons[ Reputable.server ].dailyFishingQuest then
 		dFQ    = Reputable_Data.global.dailyDungeons[ Reputable.server ].dailyFishingQuest
 		dFQR   = Reputable_Data.global.dailyDungeons[ Reputable.server ].dailyFishingQuestReset
+	end
+	if Reputable_Data.global.dailyDungeons[ Reputable.server ].dailyWotlkFishingQuest then
+		dWFQ    = Reputable_Data.global.dailyDungeons[ Reputable.server ].dailyWotlkFishingQuest
+		dWFQR   = Reputable_Data.global.dailyDungeons[ Reputable.server ].dailyWotlkFishingQuestReset
 	end
 	if Reputable_Data.global.dailyDungeons[ Reputable.server ].dailyPvPQuest then
 		dPvPQ  = Reputable_Data.global.dailyDungeons[ Reputable.server ].dailyPvPQuest
 		dPvPQR = Reputable_Data.global.dailyDungeons[ Reputable.server ].dailyPvPQuestReset
 	end
 	
-	if dND == "" or dHD == "" or dCQ == "" or dFQ == "" or dPvPQ == "" then missingData = true end
+	if dND == "" or dHD == "" or dCQ == "" or dFQ == "" or dWCQ == "" or dWFQ == "" or dPvPQ == "" then missingData = true end
 	
-	local message = action..":"..version..":"..dND..":"..dNDR..":"..dHD..":"..dHDR..":"..dCQ..":"..dCQR..":"..dFQ..":"..dFQR..":"..dPvPQ..":"..dPvPQR
-	local msgQuests = dND..":"..dHD..":"..dCQ..":"..dFQ..":"..dPvPQ
+	local message = action..":"..version..":"..dND..":"..dNDR..":"..dHD..":"..dHDR..":"..dCQ..":"..dCQR..":"..dFQ..":"..dFQR..":"..dPvPQ..":"..dPvPQR..":"..dWCQ..":"..dWCQR..":"..dWFQ..":"..dWFQR
+	local msgQuests = dND..":"..dHD..":"..dCQ..":"..dFQ..":"..dPvPQ..":"..dWCQ..":"..dWFQ
 	
 	--debug( "Channel:",ignore, "I have missing data:", missingData, "User requires reponse:", responseNeeded )
 	if ignore or responseNeeded or missingData then
@@ -523,9 +532,11 @@ end
 local addonMsgArray = {
 	{ name = "dailyNormalDungeon" },
 	{ name = "dailyHeroicDungeon" },
-	{ name = "dailyCookingQuest" },
-	{ name = "dailyFishingQuest" },
-	{ name = "dailyPvPQuest" },
+	{ name = "dailyCookingQuest" },	
+	{ name = "dailyFishingQuest" },	
+	{ name = "dailyPvPQuest" },	
+	{ name = "dailyWotlkCookingQuest" },
+	{ name = "dailyWotlkFishingQuest" },
 }
 Reputable.needOldVersionMessage = true
 function Reputable:addonMessage( message, channel )
@@ -542,7 +553,7 @@ function Reputable:addonMessage( message, channel )
 		local broadCast = nil
 		local a = addonMsgArray
 		local action, sentVersion
-		action, sentVersion, a[1].questID, a[1].timeLeft, a[2].questID, a[2].timeLeft, a[3].questID, a[3].timeLeft, a[4].questID, a[4].timeLeft, a[5].questID, a[5].timeLeft = strsplit(":", message);
+		action, sentVersion, a[1].questID, a[1].timeLeft, a[2].questID, a[2].timeLeft, a[3].questID, a[3].timeLeft, a[4].questID, a[4].timeLeft, a[5].questID, a[5].timeLeft, a[6].questID, a[6].timeLeft, a[7].questID, a[7].timeLeft = strsplit(":", message);
 		if action == "send" then
 			local build, wowEra, buildType = strsplit("-",version); build = tonumber( build )
 			local sentBuild, sentWowEra, sentBuildType = strsplit("-",sentVersion); sentBuild = tonumber( sentBuild )
@@ -894,9 +905,17 @@ Reputable:SetScript("OnEvent", function (self, event, ...)
 					Reputable_Data.global.dailyDungeons[ Reputable.server ].dailyCookingQuest = questID
 					Reputable_Data.global.dailyDungeons[ Reputable.server ].dailyCookingQuestReset = resetTime
 					Reputable:addonMessage()
+				elseif Reputable.dailyInfo[ questID ].cookingWotlk then
+					Reputable_Data.global.dailyDungeons[ Reputable.server ].dailyWotlkCookingQuest = questID
+					Reputable_Data.global.dailyDungeons[ Reputable.server ].dailyWotlkCookingQuestReset = resetTime
+					Reputable:addonMessage()
 				elseif Reputable.dailyInfo[ questID ].fishing then
 					Reputable_Data.global.dailyDungeons[ Reputable.server ].dailyFishingQuest = questID
 					Reputable_Data.global.dailyDungeons[ Reputable.server ].dailyFishingQuestReset = resetTime
+					Reputable:addonMessage()
+				elseif Reputable.dailyInfo[ questID ].fishingWotlk then
+					Reputable_Data.global.dailyDungeons[ Reputable.server ].dailyWotlkFishingQuest = questID
+					Reputable_Data.global.dailyDungeons[ Reputable.server ].dailyWotlkFishingQuestReset = resetTime
 					Reputable:addonMessage()
 				end
 				Reputable:guiUpdate( true )
@@ -993,7 +1012,9 @@ function Reputable:initiate()
 			guiShowNormalDaily = true,
 			guiShowHeroicDaily = true,
 			guiShowCookingDaily = true,
+			guiShowWotlkCookingDaily = true,
 			guiShowFishingDaily = true,
+			guiShowWotlkFishingDaily = true,
 			guiShowPvPDaily = true,
 			repInQuestLog = true,
 			xpToolTip = true,
@@ -1134,12 +1155,16 @@ function Reputable:resetDailies( check )
 		Reputable_Data.global.dailyDungeons[ Reputable.server ].dailyNormalDungeon = nil
 		Reputable_Data.global.dailyDungeons[ Reputable.server ].dailyHeroicDungeon = nil
 		Reputable_Data.global.dailyDungeons[ Reputable.server ].dailyCookingQuest = nil
+		Reputable_Data.global.dailyDungeons[ Reputable.server ].dailyWotlkCookingQuest = nil
 		Reputable_Data.global.dailyDungeons[ Reputable.server ].dailyFishingQuest = nil
+		Reputable_Data.global.dailyDungeons[ Reputable.server ].dailyWotlkFishingQuest = nil
 		Reputable_Data.global.dailyDungeons[ Reputable.server ].dailyPvPQuest = nil
 		Reputable_Data.global.dailyDungeons[ Reputable.server ].dailyNormalDungeonReset = 90000
 		Reputable_Data.global.dailyDungeons[ Reputable.server ].dailyHeroicDungeonReset = 90000
 		Reputable_Data.global.dailyDungeons[ Reputable.server ].dailyCookingQuestReset = 90000
+		Reputable_Data.global.dailyDungeons[ Reputable.server ].dailyWotlkCookingQuestReset = 90000
 		Reputable_Data.global.dailyDungeons[ Reputable.server ].dailyFishingQuestReset = 90000
+		Reputable_Data.global.dailyDungeons[ Reputable.server ].dailyWotlkFishingQuestReset = 90000
 		Reputable_Data.global.dailyDungeons[ Reputable.server ].dailyPvPQuestReset = 90000
 		local nextChange = GetQuestResetTime() + 3600 * Reputable_Data.global.dailyDungeons[ Reputable.server ].dailyChangeOffset
 		if nextChange > 86400 then nextChange = nextChange - 86400 end
@@ -1234,7 +1259,7 @@ function Reputable:getDailyCount( key )
 		local countFishing = 0
 		local countPvP = 0
 		local countBrewfestBarkQuest = 0
-		local normal, heroic, cooking, fishing, pvp, brewfestBarkQuest = "","","","","",""
+		local normal, heroic, cooking, cookingWotlk, fishing, fishingWotlk, pvp, brewfestBarkQuest = "","","","","","","",""
 		if k.savedDailies then
 			for questID in pairs ( k.savedDailies ) do
 				if Reputable.dailyInfo[ questID ] or Reputable.brefestBarks[ questID ] then
@@ -1242,12 +1267,14 @@ function Reputable:getDailyCount( key )
 					elseif Reputable.dailyInfo[ questID ].normal  then countDungeonNoraml = 1; normal  = "["..LFG_TYPE_DAILY_DUNGEON.."]\n"
 					elseif Reputable.dailyInfo[ questID ].heroic  then countDungeonHeroic = 1; heroic  = "["..LFG_TYPE_DAILY_HEROIC_DUNGEON.."]\n"
 					elseif Reputable.dailyInfo[ questID ].cooking then countCooking 	  = 1; cooking = "["..PROFESSIONS_COOKING.." "..DAILY.."]\n"
+					elseif Reputable.dailyInfo[ questID ].cookingWotlk then countCooking 	  = 1; cookingWotlk = "["..PROFESSIONS_COOKING.." Wotlk "..DAILY.."]\n"
 					elseif Reputable.dailyInfo[ questID ].fishing then countFishing 	  = 1; fishing = "["..PROFESSIONS_FISHING.." "..DAILY.."]\n"
+					elseif Reputable.dailyInfo[ questID ].fishingWotlk then countFishing 	  = 1; fishingWotlk = "["..PROFESSIONS_FISHING.." Wotlk "..DAILY.."]\n"
 					elseif Reputable.dailyInfo[ questID ].pvp     then countPvP			  = 1; pvp	   = "["..PVP.." "..DAILY.."]\n" end
 				else dailyCount = dailyCount + 1; dailyList = dailyList.."["..Reputable.questInfo[ questID ][1].."]\n" end
 			end
 			dailyCount = dailyCount + countDungeonNoraml + countDungeonHeroic + countCooking + countFishing + countPvP + countBrewfestBarkQuest
-			dailyList = normal..heroic..cooking..fishing..pvp..brewfestBarkQuest..dailyList
+			dailyList = normal..heroic..cooking..cookingWotlk..fishing..fishingWotlk..pvp..brewfestBarkQuest..dailyList
 		end
 	end
 	
@@ -1669,10 +1696,22 @@ Reputable.addDailiesToToolTip = function ( tt )
 			tt:AddDoubleLine( Reputable:icons( complete ).."|cffffff00"..PROFESSIONS_COOKING.." "..DAILY.."|r", Reputable:createLink( "quest" , questID, nil, nil, nil, nil ) )
 			lineAdded = true
 		end
+		if Reputable_Data.global.guiShowWotlkCookingDaily and Reputable_Data.global.dailyDungeons[ Reputable.server ].dailyWotlkCookingQuest then
+			local questID = Reputable_Data.global.dailyDungeons[ Reputable.server ].dailyWotlkCookingQuest
+			local levelColor, complete, inProgress, progressIcon, levelMin, levelTooLow, levelString, minF, minR, maxF, maxR, repTooLow, repTooHigh, requiredQuestComplete = Reputable:getQuestInfo( questID, nil, nil )
+			tt:AddDoubleLine( Reputable:icons( complete ).."|cffffff00"..PROFESSIONS_COOKING.." Wotlk "..DAILY.."|r", Reputable:createLink( "quest" , questID, nil, nil, nil, nil ) )
+			lineAdded = true
+		end
 		if Reputable_Data.global.guiShowFishingDaily and Reputable_Data.global.dailyDungeons[ Reputable.server ].dailyFishingQuest then
 			local questID = Reputable_Data.global.dailyDungeons[ Reputable.server ].dailyFishingQuest
 			local levelColor, complete, inProgress, progressIcon, levelMin, levelTooLow, levelString, minF, minR, maxF, maxR, repTooLow, repTooHigh, requiredQuestComplete = Reputable:getQuestInfo( questID, nil, nil )
 			tt:AddDoubleLine( Reputable:icons( complete ).."|cffffff00"..PROFESSIONS_FISHING.." "..DAILY.."|r", Reputable:createLink( "quest" , questID, nil, nil, nil, nil ) )
+			lineAdded = true
+		end
+		if Reputable_Data.global.guiShowWotlkFishingDaily and Reputable_Data.global.dailyDungeons[ Reputable.server ].dailyWotlkFishingQuest then
+			local questID = Reputable_Data.global.dailyDungeons[ Reputable.server ].dailyWotlkFishingQuest
+			local levelColor, complete, inProgress, progressIcon, levelMin, levelTooLow, levelString, minF, minR, maxF, maxR, repTooLow, repTooHigh, requiredQuestComplete = Reputable:getQuestInfo( questID, nil, nil )
+			tt:AddDoubleLine( Reputable:icons( complete ).."|cffffff00"..PROFESSIONS_FISHING.." Wotlk "..DAILY.."|r", Reputable:createLink( "quest" , questID, nil, nil, nil, nil ) )
 			lineAdded = true
 		end
 		if Reputable_Data.global.guiShowPvPDaily and Reputable_Data.global.dailyDungeons[ Reputable.server ].dailyPvPQuest then
@@ -2502,7 +2541,7 @@ local function addFactionToQuestLog( thisRepObj, i, repTooHigh, repeatable, ques
 end
 		--if classicFactionPages[ q[5][1] ] then
 		--	local pageName = Reputable.guiTabs[ "faction"..q[5][1] ].html
-		--	addQuestToHTML( pageName, questID, repIncrease, nil )
+		--	Reputable:addQuestToHTML( pageName, questID, repIncrease, nil )
 		--end
 
 local childFrames = {
