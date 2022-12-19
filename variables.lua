@@ -283,31 +283,57 @@ Reputable.junk = {
 }
 
 Reputable.instanceZones = {
-	{ name = "Hellfire Citadel",		abv = "hfc",  cat = "dungeons", dungeons = { 543, 542, 540 }, heroicKey = { Alliance = 30622, Horde = 30637 }, faction = { Alliance = 946, Horde = 947 } },
+	{ name = "Hellfire Citadel",		abv = "hfc",  cat = "dungeons", dungeons = { 543, 542, 540 }, heroicKey = { Alliance = 30622, Horde = 30637 }, faction = { Alliance = 946, Horde = 947 } }, -- 1
 	{ name = "Coilfang Reservoir",		abv = "cfr",  cat = "dungeons", dungeons = { 547, 546, 545 }, heroicKey = 30623, faction = 942 },
 	{ name = "Auchindoun (Mana Tombs)",	abv = "amt",  cat = "dungeons", dungeons = { 557 }, 		  heroicKey = 30633, faction = 933 },
 	{ name = "Auchindoun",				abv = "auch", cat = "dungeons", dungeons = { 558, 556, 555 }, heroicKey = 30633, faction = 1011 },
 	{ name = "Caverns of Time",			abv = "cot",  cat = "dungeons", dungeons = { 560, 269 }, 	  heroicKey = 30635, faction = 989 },
 	{ name = "Tempest Keep",			abv = "tk",   cat = "dungeons", dungeons = { 554, 553, 552 }, heroicKey = 30634, faction = 935 },
-	{ name = "Isle of Quel'Danas", 		abv = "iqd",  cat = "dungeons", dungeons = { 585 },  		  heroicQuest = 11492, faction = 1077 },
+	{ name = "Isle of Quel'Danas", 		abv = "iqd",  cat = "dungeons", dungeons = { 585 },  		  heroicQuest = 11492, faction = 1077 }, -- 7
+	{ name = "Utgarde", abv = "ut", cat = "dungeonsWotlk", dungeons = { 574, 575 }, faction = { Alliance = 1037, Horde = 1052} }, -- 8
+	{ name = "Nexus", abv = "nxk", cat = "dungeonsWotlk", dungeons = { 576, 578 }, faction = { Alliance = 1037, Horde = 1052} },
+	{ name = "Azjol", abv = "az", cat = "dungeonsWotlk", dungeons = { 601, 619 }, faction = { Alliance = 1037, Horde = 1052} },
+	{ name = "Zul'Drak", abv = "zd", cat = "dungeonsWotlk", dungeons = { 600, 604 }, faction = { Alliance = 1037, Horde = 1052} },
+	{ name = "Dalaran", abv = "vh", cat = "dungeonsWotlk", dungeons = { 608 }, faction = { Alliance = 1037, Horde = 1052} },
+	{ name = "Caverns of Time", abv = "cotlk", cat = "dungeonsWotlk", dungeons = { 595 }, faction = { Alliance = 1037, Horde = 1052}},
+	{ name = "Ulduar", abv = "ul", cat = "dungeonsWotlk", dungeons = { 599, 602 }, faction = { Alliance = 1037, Horde = 1052} },
+	{ name = "Argent Tournament", abv = "at", cat = "dungeonsWotlk", dungeons = { 650 }, faction = { Alliance = 1037, Horde = 1052} },
+	{ name = "Icecrown Citadel", abv = "icc", cat = "dungeonsWotlk", dungeons = { 632, 658, 668 }, faction = { Alliance = 1037, Horde = 1052} }, -- 16
 }
 Reputable.instance = {
 	[543] = { mapID = 3562,	zoneMID = 3535,	iz = 1, heroic = true, level = { 58, 60, 62 }, rep = { normal = { max = 8999, rep =  633 }, 																	heroic = { rep = 2500 } }, icon = "Achievement_Boss_OmarTheUnscarred_01" },
 	[542] = { mapID = 3713, zoneMID = 3535,	iz = 1, heroic = true, level = { 58, 61, 63 }, rep = { normal = { max = 8999, rep =  750 }, 																	heroic = { rep = 2700 } }, icon = "Achievement_Boss_KelidanTheBreaker" },
-	[540] = { mapID = 3714, zoneMID = 3535,	iz = 1, heroic = true, level = { 67, 70, 72 }, rep = { normal = { 			  rep = 1600 }, 																	heroic = { rep = 2900 } }, icon = "Achievement_Boss_KargathBladefist_01", accessKey = 28395 },
+	[540] = { mapID = 3714, zoneMID = 3535,	iz = 1, heroic = true, level = { 67, 70, 70 }, rep = { normal = { 			  rep = 1600 }, 																	heroic = { rep = 2900 } }, icon = "Achievement_Boss_KargathBladefist_01", accessKey = 28395 },
 	[547] = { mapID = 3717, zoneMID = 3905, iz = 2, heroic = true, level = { 59, 62, 64 }, rep = { normal = { max = 8999, rep =  650 }, 																	heroic = { rep = 2750 } }, icon = "Achievement_Boss_Quagmirran" },
 	[546] = { mapID = 3716, zoneMID = 3905, iz = 2, heroic = true, level = { 60, 63, 65 }, rep = { normal = { max = 8999, rep = 1000, note = "Some mobs will give rep through "..FACTION_STANDING_LABEL6 },	heroic = { rep = 2680 } }, icon = "Achievement_Boss_theBlackStalker" },
-	[545] = { mapID = 3715, zoneMID = 3905, iz = 2, heroic = true, level = { 67, 70, 72 }, rep = { normal = { 			  rep = 1662 }, 																	heroic = { rep = 2559 } }, icon = "Achievement_Boss_Warlord_Kalithresh" },
+	[545] = { mapID = 3715, zoneMID = 3905, iz = 2, heroic = true, level = { 67, 70, 70 }, rep = { normal = { 			  rep = 1662 }, 																	heroic = { rep = 2559 } }, icon = "Achievement_Boss_Warlord_Kalithresh" },
 	[557] = { mapID = 3792, zoneMID = 3917, iz = 3, heroic = true, level = { 62, 64, 66 }, rep = { normal = { max = 8999, rep = 1200 }, 																	heroic = { rep = 2400 } }, icon = "Achievement_Boss_Nexus_Prince_Shaffar" },
 	[558] = { mapID = 3790, zoneMID = 3917, iz = 4, heroic = true, level = { 63, 65, 67 }, rep = { normal = { max = 8999, rep =  700 }, 																	heroic = { rep = 2000 } }, icon = "Achievement_Boss_Exarch_Maladaar" },
 	[556] = { mapID = 3791, zoneMID = 3917, iz = 4, heroic = true, level = { 65, 67, 69 }, rep = { normal = { max = 8999, rep = 1035 }, 																	heroic = { rep = 2000 } }, icon = "Achievement_Boss_TalonKingIkiss" },
-	[555] = { mapID = 3789, zoneMID = 3917, iz = 4, heroic = true, level = { 67, 70, 72 }, rep = { normal = { 			  rep = 1750 }, 																	heroic = { rep = 2700 } }, icon = "Achievement_Boss_Murmur", accessKey = 27991 },
+	[555] = { mapID = 3789, zoneMID = 3917, iz = 4, heroic = true, level = { 67, 70, 70 }, rep = { normal = { 			  rep = 1750 }, 																	heroic = { rep = 2700 } }, icon = "Achievement_Boss_Murmur", accessKey = 27991 },
 	[560] = { mapID = 2367, zoneMID = 1941, iz = 5, heroic = true, level = { 64, 66, 68 }, rep = { normal = { 			  rep = 1300 }, 																	heroic = { rep = 2800 } }, icon = "Achievement_Boss_EpochHunter", accessQuest = 10277 },
-	[269] = { mapID = 2366, zoneMID = 1941, iz = 5, heroic = true, level = { 68, 69, 72 }, rep = { normal = { 			  rep = 1200 }, 																	heroic = { rep = 1900 } }, icon = "Achievement_Boss_Aeonus_01", accessQuest = 10285 },
-	[554] = { mapID = 3849, zoneMID = 3842, iz = 6, heroic = true, level = { 67, 69, 72 }, rep = { normal = { 			  rep = 1620 }, 																	heroic = { rep = 2100 } }, icon = "Achievement_Boss_PathaleonTheCalculator" },
-	[553] = { mapID = 3847, zoneMID = 3842, iz = 6, heroic = true, level = { 67, 70, 72 }, rep = { normal = { 			  rep = 2200 }, 																	heroic = { rep = 3245 } }, icon = "Achievement_Boss_WarpSplinter" },
-	[552] = { mapID = 3848, zoneMID = 3842, iz = 6, heroic = true, level = { 68, 70, 72 }, rep = { normal = { 			  rep = 1800 }, 																	heroic = { rep = 2600 } }, icon = "Achievement_Boss_Harbinger_Skyriss", accessKey = 31084 },
-	[585] = { mapID = 4131, zoneMID = 4095, iz = 7, heroic = true, level = { 69, 70, 72 }, rep = { normal = { 			  rep = 1650 }, 																	heroic = { rep = 2350 } }, icon = "Achievement_Boss_Kael-thasSunstrider_01", heroicQuest = 11492 },
+	[269] = { mapID = 2366, zoneMID = 1941, iz = 5, heroic = true, level = { 68, 69, 70 }, rep = { normal = { 			  rep = 1200 }, 																	heroic = { rep = 1900 } }, icon = "Achievement_Boss_Aeonus_01", accessQuest = 10285 },
+	[554] = { mapID = 3849, zoneMID = 3842, iz = 6, heroic = true, level = { 67, 69, 70 }, rep = { normal = { 			  rep = 1620 }, 																	heroic = { rep = 2100 } }, icon = "Achievement_Boss_PathaleonTheCalculator" },
+	[553] = { mapID = 3847, zoneMID = 3842, iz = 6, heroic = true, level = { 67, 70, 70 }, rep = { normal = { 			  rep = 2200 }, 																	heroic = { rep = 3245 } }, icon = "Achievement_Boss_WarpSplinter" },
+	[552] = { mapID = 3848, zoneMID = 3842, iz = 6, heroic = true, level = { 68, 70, 70 }, rep = { normal = { 			  rep = 1800 }, 																	heroic = { rep = 2600 } }, icon = "Achievement_Boss_Harbinger_Skyriss", accessKey = 31084 },
+	[585] = { mapID = 4131, zoneMID = 4095, iz = 7, heroic = true, level = { 69, 70, 70 }, rep = { normal = { 			  rep = 1650 }, 																	heroic = { rep = 2350 } }, icon = "Achievement_Boss_Kael-thasSunstrider_01", heroicQuest = 11492 },
+	-- wrath
+	[574] = { mapID = 206, zoneMID = 495, iz = 8, heroic = true, level = { 68, 70, 75 }, rep = { normal = { rep = 0 }, heroic = { rep = 2000 }}, icon = "Achievement_Boss_Princekeleseth"},
+	[575] = { mapID = 4271, zoneMID = 495, iz = 8, heroic = true, level = { 78, 80, 80 }, rep = { normal = { rep = 500 }, heroic = { rep = 2000 }}, icon = "Achievement_Boss_Kingymiron_01"},
+	[576] = { mapID = 4265, zoneMID = 3537, iz = 9, heroic = true, level = { 70, 72, 75 }, rep = { normal = { rep = 0 }, heroic = { rep = 2000 }}, icon = "Achievement_Boss_Keristrasza"},
+	[578] = { mapID = 4228, zoneMID = 3537, iz = 9, heroic = true, level = { 78, 80, 80 }, rep = { normal = { rep = 500 }, heroic = { rep = 2000 }}, icon = "Achievement_Boss_Eregos"},
+	[601] = { mapID = 4277, zoneMID = 65, iz = 10, heroic = true, level = { 70, 72, 77 }, rep = { normal = { rep = 0 }, heroic = { rep = 2000 }}, icon = "Achievement_Boss_Anubarak"},
+	[619] = { mapID = 4494, zoneMID = 65, iz = 10, heroic = true, level = { 71, 73, 78 }, rep = { normal = { rep = 0 }, heroic = { rep = 2000 }}, icon = "Achievement_Boss_Heraldvolazj"},
+	[600] = { mapID = 4196, zoneMID = 394, iz = 11, heroic = true, level = { 72, 74, 78 }, rep = { normal = { rep = 0 }, heroic = { rep = 2000 }}, icon = "Achievement_Boss_Kingdred"},
+	[604] = { mapID = 4416, zoneMID = 66, iz = 11, heroic = true, level = { 76, 78, 80 }, rep = { normal = { rep = 0 }, heroic = { rep = 2000 }}, icon = "Achievement_Boss_Galdarah"},
+	[608] = { mapID = 4415, zoneMID = 4395, iz = 12, heroic = true, level = { 73, 75, 79 }, rep = { normal = { rep = 0 }, heroic = { rep = 2000 }}, icon = "Achievement_Boss_Cyanigosa"},
+	[595] = { mapID = 4100, zoneMID = 1941, iz = 13, heroic = true, level = { 78, 80, 80 }, rep = { normal = { rep = 500 }, heroic = { rep = 2000 }}, icon = "Achievement_Boss_Infinitecorruptor"},
+	[599] = { mapID = 4264, zoneMID = 67, iz = 14, heroic = true, level = { 75, 77, 80 }, rep = { normal = { rep = 0 }, heroic = { rep = 2000 }}, icon = "Achievement_Boss_Sjonnir"},
+	[602] = { mapID = 4272, zoneMID = 67, iz = 14, heroic = true, level = { 78, 80, 80 }, rep = { normal = { rep = 500 }, heroic = { rep = 2000 }}, icon = "Achievement_Boss_Generalbjarngrim"},
+	[650] = { mapID = 4723, zoneMID = 210, iz = 15, heroic = true, level = { 80, 80, 80 }, rep = { normal = { rep = 500 }, heroic = { rep = 2000 }}, icon = "Achievement_Boss_Blacknight"},
+	[632] = { mapID = 4809, zoneMID = 210, iz = 16, heroic = true, level = { 80, 80, 80 }, rep = { normal = { rep = 500 }, heroic = { rep = 2000 }}, icon = "Achievement_Boss_Devourerofsouls"},
+	[658] = { mapID = 4813, zoneMID = 210, iz = 16, heroic = true, level = { 80, 80, 80 }, rep = { normal = { rep = 500 }, heroic = { rep = 2000 }}, icon = "Achievement_Boss_Scourgelordtyrannus"},
+	[668] = { mapID = 4820, zoneMID = 210, iz = 16, heroic = true, level = { 80, 80, 80 }, rep = { normal = { rep = 500 }, heroic = { rep = 2000 }}, icon = "Achievement_Boss_Lichking"},
 	[230] = { mapID = 1584,	zoneMID = 25,	level = { 48, 52, 60 } },
 	[229] = { mapID = 1583,	zoneMID = 25,	level = { 48, 55, 60 } },
 	[249] = { mapID = 2159, zoneMID = 15,	level = { 52, 60, 60 }, accessKey = 16309 },
@@ -399,7 +425,7 @@ Reputable.factionInfo = {
 	[ 1073	] = { name = "The Kalu'ak", rquests = {11945,11960,11472,24803,24806} },
 	[ 1085	] = { name = "Warsong Offensive", rquests = {12270,12280,12284,12288,13283,13301,13310,13330,13331}, Alliance = false },
 	[ 1090	] = { name = "Kirin Tor", rquests = {12958,12959,12960,12961,12962,12963,13100,13101,13102,13103,13107,13112,13113,13114,13115,13116,13148,13240,13241,13243,13244,13245,13246,13247,13248,13249,13250,13251,13252,13253,13254,13255,13256,13832,13833,13834,13836,13845,14199,14203,24579,24580,24581,24582,24583,24584,24585,24586,24587,24588,24589,24590} },
-	[ 1091	] = { name = "The Wyrmrest Accord",rquests = {11940,12372,13414} },
+	[ 1091	] = { name = "The Wyrmrest Accord", rquests = {11940,12372,13414} },
 	[ 1094	] = { name = "The Silver Covenant", rquests = {13625,13666,13669,13670,13671}, Horde = false },
 	[ 1098	] = { name = "Knights of the Ebon Blade",rquests = {12813,12815,12838,12995,13069,13071,13092,13093,13788,13791,13793,13812,13813,13814,13863,13864} },
 	[ 1104	] = { name = "Frenzyheart Tribe",rquests = {12702,12703,12732,12734,12741,12758,12759,12760} },
@@ -427,8 +453,6 @@ Reputable.factionByMapID = {
 	[1949] = 942,								-- Blades Edge Mountains
 	[1953] = 933,								-- Netherstorm
 	[1948] = 1012,								-- Shadowmoon Valley
-	
-	
 }
 
 Reputable.extraQuestInfo = {
@@ -484,8 +508,7 @@ Reputable.extraQuestInfo = {
 	[ 10983 ] = { breadcrumb = {10984}},
 	[ 10588 ] = { requires = {10523,10541,10579}},
 	[  9067 ] = { breadcrumb = {9395}},
-	[ 11488 ] = { breadcrumb = {11481}},
-	[ 11488 ] = { breadcrumb = {11482}},
+	[ 11488 ] = { breadcrumb = {11481, 11482}},
 	
 	[ 10732 ] = { breadcrumb = {							10731,10735,10740,10727,	10730,10734,10739,10726,	10729,10733,10738,10725	}},
 	[ 10731 ] = { breadcrumb = {10732,10736,10741,10728,								10730,10734,10739,10726,	10729,10733,10738,10725	}},
@@ -564,7 +587,7 @@ UNLOCK.." "..REPUTATION,
 --The Hand of Vengeance
 [ 1067 ] = {{11234},{11233},{11232},{11227},{11221},{11170},{11270},{11279},{11280},{11283},{11298},{11301},{11303},{11304},{11305},{11306},{11307},{11397},{11398},{11399},{12181},{12182},{12188},{12189},{12200},{12205},{12206},{12209},{12211},{12214},{12218},{12221},{12230},{12232},{12234},{12239},{12240},{12243},{12245},{12252},{12254},{12260},{12271},{12273},{12274},{12283},{12285},{12303},{12304},{12482},{12488},{12952},{13089},},
 --Valiance Expedition
-[ 1050 ] = {{11255},{11250},{11249},{11248},{11247},{11246},{11245},{11244},{11243},{11239},{11238},{11237},{11236},{11235},{11231},{11202},{11199},{11190},{11188},{11187},{11179},{11157},{11155},{11154},{11153},{11269},{11273},{11274},{11276},{11277},{11278},{11284},{11288},{11289},{11290},{11291},{11299},{11300},{11322},{11326},{11327},{11328},{11329},{11330},{11331},{11332},{11333},{11343},{11344},{11355},{11358},{11359},{11406},{11410},{11418},{11420},{11421},{11426},{11427},{11429},{11430},{11432},{11436},{11443},{11448},{11452},{11460},{11465},{11468},{11470},{11474},{11475},{11477},{11478},{11600},{11601},{11603},{11604},{11645},{11650},{11653},{11658},{11670},{11672},{11673},{11692},{11693},{11694},{11697},{11698},{11699},{11700},{11701},{11707},{11708},{11710},{11712},{11713},{11715},{11718},{11723},{11725},{11726},{11727},{11728},{11729},{11730},{11788},{11789},{11790},{11791},{11792},{11793},{11794},{11795},{11796},{11797},{11798},{11873},{11889},{11897},{11901},{11902},{11903},{11904},{11908},{11913},{11920},{11928},{11932},{11938},{11942},{11944},{11956},{11962},{11963},{11965},{12019},{12035},{12067},{12086},{12087},{12088},{12092},{12103},{12105},{12108},{12109},{12142},{12143},{12156},{12157},{12166},{12167},{12168},{12169},{12171},{12174},{12212},{12215},{12216},{12217},{12219},{12222},{12223},{12225},{12226},{12227},{12235},{12237},{12246},{12248},{12249},{12250},{12251},{12253},{12255},{12258},{12269},{12272},{12275},{12276},{12277},{12281},{12282},{12287},{12289},{12290},{12291},{12292},{12293},{12294},{12295},{12296},{12297},{12298},{12301},{12302},{12305},{12308},{12309},{12310},{12311},{12312},{12319},{12320},{12321},{12325},{12326},{12438},{12439},{12440},{12441},{12442},{12444},{12455},{12457},{12462},{12463},{12464},{12465},{12466},{12467},{12472},{12473},{12474},{12475},{12476},{12477},{12478},{12495},{12499},{12511},{12766},{12918},{13004},{13087},{13088},{13225},{13280},{13284},{13296},{13309},{13314},{13333},{13336},{13341},{13362},{13386},{13387},{13392},{13396},{13397},{13418},{13524},{24498},{24499},{24500},{24710},},
+[ 1050 ] = {{11255},{11250},{11249},{11248},{11247},{11246},{11245},{11244},{11243},{11239},{11238},{11237},{11236},{11235},{11231},{11202},{11199},{11190},{11188},{11187},{11157},{11155},{11154},{11153},{11269},{11273},{11274},{11276},{11277},{11278},{11284},{11288},{11289},{11290},{11291},{11299},{11300},{11322},{11326},{11327},{11328},{11329},{11330},{11331},{11332},{11333},{11343},{11344},{11355},{11358},{11359},{11406},{11410},{11418},{11420},{11421},{11426},{11427},{11429},{11430},{11432},{11436},{11443},{11448},{11452},{11460},{11465},{11468},{11470},{11474},{11475},{11477},{11478},{11600},{11601},{11603},{11604},{11645},{11650},{11653},{11658},{11670},{11672},{11673},{11692},{11693},{11694},{11697},{11698},{11699},{11700},{11701},{11707},{11708},{11710},{11712},{11713},{11715},{11718},{11723},{11725},{11726},{11727},{11728},{11729},{11730},{11788},{11789},{11790},{11791},{11792},{11793},{11794},{11795},{11796},{11797},{11798},{11873},{11889},{11897},{11901},{11902},{11903},{11904},{11908},{11913},{11920},{11928},{11932},{11938},{11942},{11944},{11956},{11962},{11963},{11965},{12019},{12035},{12067},{12086},{12088},{12092},{12105},{12109},{12142},{12143},{12157},{12166},{12167},{12168},{12169},{12171},{12174},{12212},{12215},{12216},{12217},{12219},{12222},{12223},{12225},{12226},{12227},{12235},{12237},{12246},{12248},{12249},{12250},{12251},{12253},{12255},{12258},{12269},{12272},{12275},{12276},{12277},{12281},{12282},{12287},{12289},{12290},{12291},{12292},{12293},{12294},{12295},{12296},{12297},{12298},{12301},{12302},{12305},{12308},{12309},{12310},{12311},{12312},{12319},{12320},{12321},{12325},{12326},{12438},{12439},{12440},{12441},{12442},{12444},{12455},{12457},{12462},{12463},{12464},{12465},{12466},{12467},{12472},{12473},{12474},{12475},{12476},{12477},{12478},{12495},{12499},{12511},{12766},{12918},{13004},{13087},{13088},{13225},{13280},{13284},{13296},{13309},{13314},{13333},{13336},{13341},{13362},{13386},{13387},{13392},{13396},{13397},{13418},{13524},{24498},{24499},{24500},{24710},},
 --Horde Expedition
 [ 1052 ] = {{11254},{11253},{11241},{11230},{11229},{11167},{11272},{11282},{11285},{11295},{11309},{11310},{11423},{11424},{11639},{12041},{12063},{12064},{12069},{12090},{12096},{12170},{12175},{12176},{12177},{12178},{12481},},
 --The Taunka
@@ -578,7 +601,7 @@ UNLOCK.." "..REPUTATION,
 --Warsong Offensive
 [ 1085 ] = {{11585},{11586},{11591},{11592},{11593},{11594},{11595},{11596},{11597},{11598},{11602},{11606},{11608},{11611},{11614},{11615},{11616},{11618},{11629},{11631},{11632},{11634},{11635},{11636},{11637},{11638},{11642},{11643},{11644},{11651},{11652},{11664},{11676},{11686},{11688},{11690},{11703},{11705},{11709},{11711},{11714},{11716},{11717},{11719},{11720},{11721},{11722},{11724},{11916},{11980},{12008},{12033},{12034},{12036},{12039},{12048},{12053},{12056},{12057},{12071},{12072},{12073},{12085},{12089},{12091},{12095},{12097},{12100},{12101},{12102},{12104},{12111},{12115},{12125},{12126},{12127},{12132},{12136},{12140},{12144},{12145},{12207},{12213},{12220},{12224},{12229},{12231},{12236},{12241},{12242},{12247},{12256},{12257},{12259},{12270},{12280},{12284},{12288},{12413},{12422},{12423},{12424},{12426},{12431},{12436},{12453},{12486},{12487},{12496},{12500},{12767},{12882},{12895},{12909},{12913},{12917},{13000},{13002},{13034},{13037},{13038},{13048},{13049},{13054},{13056},{13058},{13090},{13224},{13242},{13257},{13258},{13267},{13283},{13285},{13293},{13301},{13310},{13313},{13330},{13331},{13340},{13348},{13349},{13419},{13426},{24506},{24507},{24511},{24712},{24802},},
 --Kirin Tor
-[ 1090 ] = {{11576},{11582},{11587},{11590},{11646},{11648},{11663},{11671},{11680},{11681},{11682},{11733},{11900},{11905},{11910},{11911},{11912},{11914},{11995},{11996},{11999},{12000},{12004},{12005},{12055},{12059},{12060},{12061},{12065},{12066},{12083},{12084},{12098},{12106},{12107},{12110},{12172},{12173},{12728},{12790},{12791},{12794},{12796},{12958},{12959},{12960},{12961},{12962},{12963},{13094},{13095},{13100},{13101},{13102},{13103},{13107},{13112},{13113},{13114},{13115},{13116},{13148},{13159},{13240},{13241},{13243},{13244},{13245},{13246},{13247},{13248},{13249},{13250},{13251},{13252},{13253},{13254},{13255},{13256},{13830},{13832},{13833},{13834},{13836},{13845},{14103},{14119},{14147},{14148},{14149},{14150},{14151},{14199},{14203},{24431},{24579},{24580},{24581},{24582},{24583},{24584},{24585},{24586},{24587},{24588},{24589},{24590},},
+[ 1090 ] = {{11576},{11582},{11587},{11590},{11646},{11648},{11663},{11671},{11680},{11681},{11682},{11733},{11900},{11905},{11910},{11911},{11912},{11914},{11995},{11996},{11999},{12000},{12004},{12005},{12055},{12059},{12060},{12061},{12065},{12066},{12083},{12084},{12098},{12106},{12107},{12110},{12172},{12173},{12728},{12790},{12791},{12794},{12796},{12958},{12959},{12960},{12961},{12962},{12963},{13094},{13095},{13100},{13101},{13102},{13103},{13107},{13112},{13113},{13114},{13115},{13116},{13148},{13159},{13240},{13241},{13243},{13244},{13245},{13246},{13247},{13248},{13249},{13250},{13251},{13252},{13253},{13254},{13255},{13256},{13830},{13832},{13833},{13834},{13836},{13845},{14103},{14151},{14199},{14203},{24431},{24579},{24580},{24581},{24582},{24583},{24584},{24585},{24586},{24587},{24588},{24589},{24590},},
 --The Wyrmrest Accord
 [ 1091 ] = {{11918},{11919},{11931},{11936},{11940},{11941},{11943},{11946},{11951},{11957},{11967},{11969},{11973},{12119},{12122},{12123},{12124},{12146},{12147},{12148},{12149},{12150},{12151},{12261},{12262},{12263},{12264},{12265},{12266},{12267},{12372},{12416},{12417},{12418},{12419},{12435},{12447},{12448},{12449},{12450},{12454},{12456},{12458},{12459},{12460},{12461},{12470},{12498},{12768},{12769},{13124},{13126},{13127},{13128},{13343},{13372},{13375},{13384},{13385},{13412},{13413},{13414},},
 --The Silver Covenant
@@ -929,8 +952,28 @@ Reputable.membershipBenefits = {
 	[9887] = true,
 }
 
-Reputable.brefestBarks = { [11293] = true, [11294] = true, [11407] = true, [11408] = true }
+Reputable.brewfestBarks = { [11293] = true, [11294] = true, [11407] = true, [11408] = true }
 Reputable.dailyInfo = {
+	-- wrath
+	[13240] = { instanceID = 578, normalWotlk = true, rep = {1090,75 } },
+	[13241] = { instanceID = 575, normalWotlk = true, rep = {1090,75 } },
+	[13243] = { instanceID = 595, normalWotlk = true, rep = {1090,75 } },
+	[13244] = { instanceID = 602, normalWotlk = true, rep = {1090,75 } },
+	[13190] = { instanceID = 619, heroicWotlk = true },
+	[14199] = { instanceID = 650, heroicWotlk = true, rep = {1090,75 } },
+	[13245] = { instanceID = 574, heroicWotlk = true, rep = {1090,75 } },
+	[13246] = { instanceID = 576, heroicWotlk = true, rep = {1090,75 } },
+	[13247] = { instanceID = 578, heroicWotlk = true, rep = {1090,75 } },
+	[13248] = { instanceID = 575, heroicWotlk = true, rep = {1090,75 } },
+	[13249] = { instanceID = 600, heroicWotlk = true, rep = {1090,75 } },
+	[13250] = { instanceID = 604, heroicWotlk = true, rep = {1090,75 } },
+	[13251] = { instanceID = 595, heroicWotlk = true, rep = {1090,75 } },
+	[13251] = { instanceID = 599, heroicWotlk = true, rep = {1090,75 } },
+	[13253] = { instanceID = 602, heroicWotlk = true, rep = {1090,75 } },
+	[13254] = { instanceID = 601, heroicWotlk = true, rep = {1090,75 } },
+	[13255] = { instanceID = 619, heroicWotlk = true, rep = {1090,75 } },
+	[13256] = { instanceID = 608, heroicWotlk = true, rep = {1090,75 } },
+
 	[11500] = { instanceID = 585, normal = true, rep = {933,250,1077,250 } },
 	[11383] = { instanceID = 269, normal = true, rep = {933,250,989,250 } },
 	[11376] = { instanceID = 555, normal = true, rep = {933,250,1011,250 } },
@@ -1059,8 +1102,8 @@ Reputable.guiTabs = {
 
 		--{ name = "events",	title = "Brewfest",	label = "Brewfest", cat = 5 },
 	--{ name = "HallowsEnd",	title = "Hallow's End",	label = "Hallow's End", cat = 5 },
-	{ name = "dungeons",	title = EXPANSION_NAME1 .. " " .. DUNGEONS, 	label = EXPANSION_NAME1, cat = 1 },	
-	{ name = "dungeonsWotlk",	title = EXPANSION_NAME2 .. " " .. DUNGEONS, 	label = EXPANSION_NAME2, cat = 1 },	
+	{ name = "dungeonsWotlk",	title = EXPANSION_NAME2 .. " " .. DUNGEONS, 	label = EXPANSION_NAME2, cat = 1 },
+	{ name = "dungeons",	title = EXPANSION_NAME1 .. " " .. DUNGEONS, 	label = EXPANSION_NAME1, cat = 1 },
 	{ name = "dailies", 	title = ALL.." "..DAILY.." "..QUESTS_LABEL, label = ALL.." "..DAILY.." "..QUESTS_LABEL, cat = 2 },
 	--{ name = "reputations",	title = REPUTATION.." " ..EXPANSION_NAME2, 	label = EXPANSION_NAME2, cat = 2 },
 	--{ name = "reputations",	title = REPUTATION.." " ..EXPANSION_NAME1, 	label = EXPANSION_NAME2, cat = 2 },

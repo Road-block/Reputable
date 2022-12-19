@@ -2,7 +2,7 @@
 ## Title: Reputable
 ## Author: Remulos' Revenga, Schoppi (wotlkc)
 ## Notes: Reputation enhancements and more!
-## Version: 1.37-wotlk
+## Version: 1.38-wotlk
 ## SavedVariables: Reputable_Data
 
 ## X-Curse-Project-ID: 429955

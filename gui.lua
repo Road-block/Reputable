@@ -295,7 +295,9 @@ local function makeDungeonHTMLlist ()
 				factionPage.iRight = factionPage.i
 			end
 		end
-		if factionPage then Reputable:addLineToHTML( factionPage, "p", Reputable.instanceZones[ Reputable.factionInfo[ factionID ].iz ].name .. " " .. factionLink, nil, nil ) end
+		if factionPage then
+			Reputable:addLineToHTML( factionPage, "p", Reputable.instanceZones[ Reputable.factionInfo[ factionID ].iz ].name .. " " .. factionLink, nil, nil )
+		end
 		Reputable:addLineToHTML( Reputable.guiTabs[cat].html, "p", zoneInfo.name .. " " .. factionLink, nil, nil )
 		for _, dungeonID in ipairs ( zoneInfo.dungeons ) do
 			Reputable:getInstanceStatus( dungeonID )
@@ -316,7 +318,7 @@ function Reputable:addQuestToHTML( page, questID, repInc, factionID, showLocatio
 			local extraInfo = Reputable.extraQuestInfo[ questID ]
 			local repStr = ""
 			local repstringColour = "|cFF8080FF"
-			if Reputable.ingoredQuestsForRep and Reputable.ingoredQuestsForRep[questID] then repstringColour ="|cff808080" end
+			if Reputable.ignoredQuestsForRep and Reputable.ignoredQuestsForRep[questID] then repstringColour ="|cff808080" end
 			if repInc and repInc > 0 then repStr = repstringColour .." +" .. Reputable:repWithMultiplier( repInc, nil ).. "|r" end
 			if extraInfo and extraInfo.item then
 				Reputable:tryMakeItemLink( extraInfo.item, page.name, "right", page.i, nil, nil, nil )
@@ -336,7 +338,6 @@ function Reputable:addQuestToHTML( page, questID, repInc, factionID, showLocatio
 					showThisDaily = false
 				end
 			end
-			
 			if page.name == "dailies" then
 				if showThisDaily then
 					if factionID and not page.dailyFactionHeader[factionID] then
@@ -442,7 +443,51 @@ local function makeDataForAllPages()
 	--	guiShowCookingDaily = true,
 	--	guiShowNormalDaily = true,
 	--	guiShowHeroicDaily = true,
-	
+	--  guiShowNormalWotLKDaily = true,
+	--  guiShowHeroicWotLKDaily = true,
+
+	if Reputable_Data.global.guiShowNormalWotLKDaily then
+		Reputable:addLineToHTML( dailiesPage, "p", "|cffffff00Wotlk "..LFG_TYPE_DAILY_DUNGEON.."|r", nil, nil )
+		if Reputable_Data.global.dailyDungeons[ server ].dailyNormalDungeonLK then
+			Reputable:addDungeonToHTML( dailiesPage, Reputable.dailyInfo[ Reputable_Data.global.dailyDungeons[ server ].dailyNormalDungeonLK ].instanceID, 0, nil, nil)
+			Reputable:addQuestToHTML( dailiesPage, Reputable_Data.global.dailyDungeons[ server ].dailyNormalDungeonLK, nil, nil )
+		else
+			Reputable:addLineToHTML( dailiesPage, "p", "|cff808080[ "..UNKNOWN.." - Speak with Archmage Timear in Dalaran City ]|r", true, nil)
+		end
+		Reputable:addLineToHTML( dailiesPage, "p", "<br/>", nil, nil )
+	end
+
+	if Reputable_Data.global.guiShowHeroicWotLKDaily then
+		Reputable:addLineToHTML( dailiesPage, "p", "|cffffff00Wotlk "..LFG_TYPE_DAILY_HEROIC_DUNGEON.."|r", nil, nil )
+		if Reputable_Data.global.dailyDungeons[ server ].dailyHeroicDungeonLK then
+			Reputable:addDungeonToHTML( dailiesPage, Reputable.dailyInfo[ Reputable_Data.global.dailyDungeons[ server ].dailyHeroicDungeonLK ].instanceID, 1, nil, nil)
+			Reputable:addQuestToHTML( dailiesPage, Reputable_Data.global.dailyDungeons[ server ].dailyHeroicDungeonLK, nil, nil )
+		else
+			Reputable:addLineToHTML( dailiesPage, "p", "|cff808080[ "..UNKNOWN.." - Speak with Archamage Lan'dalock in Dalaran City ]|r", true, nil)
+		end
+		Reputable:addLineToHTML( dailiesPage, "p", "<br/>", nil, nil )
+	end
+
+	if Reputable_Data.global.guiShowWotlkCookingDaily then
+		Reputable:addLineToHTML( dailiesPage, "p", "|cffffff00Wotlk "..PROFESSIONS_COOKING.." "..DAILY.."|r", nil, nil )
+		if Reputable_Data.global.dailyDungeons[ server ].dailyWotlkCookingQuest then
+			Reputable:addQuestToHTML( dailiesPage, Reputable_Data.global.dailyDungeons[ server ].dailyWotlkCookingQuest, nil, nil )
+		else
+			Reputable:addLineToHTML( dailiesPage, "p", "|cff808080[ "..UNKNOWN.." - Speak with The Rokk in Shattrath City ]|r", true, nil)
+		end
+		Reputable:addLineToHTML( dailiesPage, "p", "<br/>", nil, nil )
+	end
+
+	if Reputable_Data.global.guiShowWotlkFishingDaily then
+		Reputable:addLineToHTML( dailiesPage, "p", "|cffffff00Wotlk "..PROFESSIONS_FISHING.." "..DAILY.." |r", nil, nil )
+		if Reputable_Data.global.dailyDungeons[ server ].dailyWotlkFishingQuest then
+			Reputable:addQuestToHTML( dailiesPage, Reputable_Data.global.dailyDungeons[ server ].dailyWotlkFishingQuest, nil, nil )
+		else
+			Reputable:addLineToHTML( dailiesPage, "p", "|cff808080[ "..UNKNOWN.." - Speak with Marcia Chase in Dalaran ]|r", true, nil)
+		end
+		Reputable:addLineToHTML( dailiesPage, "p", "<br/>", nil, nil )
+	end
+
 	if Reputable_Data.global.guiShowNormalDaily then
 		Reputable:addLineToHTML( dailiesPage, "p", "|cffffff00"..LFG_TYPE_DAILY_DUNGEON.."|r", nil, nil )
 		if Reputable_Data.global.dailyDungeons[ server ].dailyNormalDungeon then
@@ -464,7 +509,7 @@ local function makeDataForAllPages()
 		end
 		Reputable:addLineToHTML( dailiesPage, "p", "<br/>", nil, nil )
 	end
-	
+
 	if Reputable_Data.global.guiShowCookingDaily then
 		Reputable:addLineToHTML( dailiesPage, "p", "|cffffff00"..PROFESSIONS_COOKING.." "..DAILY.."|r", nil, nil )
 		if Reputable_Data.global.dailyDungeons[ server ].dailyCookingQuest then
@@ -474,33 +519,13 @@ local function makeDataForAllPages()
 		end
 		Reputable:addLineToHTML( dailiesPage, "p", "<br/>", nil, nil )
 	end
-	
-	if Reputable_Data.global.guiShowWotlkCookingDaily then
-		Reputable:addLineToHTML( dailiesPage, "p", "|cffffff00"..PROFESSIONS_COOKING.." Wotlk "..DAILY.."|r", nil, nil )
-		if Reputable_Data.global.dailyDungeons[ server ].dailyWotlkCookingQuest then
-			Reputable:addQuestToHTML( dailiesPage, Reputable_Data.global.dailyDungeons[ server ].dailyWotlkCookingQuest, nil, nil )
-		else
-			Reputable:addLineToHTML( dailiesPage, "p", "|cff808080[ "..UNKNOWN.." - Speak with The Rokk in Shattrath City ]|r", true, nil)
-		end
-		Reputable:addLineToHTML( dailiesPage, "p", "<br/>", nil, nil )
-	end
-	
+
 	if Reputable_Data.global.guiShowFishingDaily then
 		Reputable:addLineToHTML( dailiesPage, "p", "|cffffff00"..PROFESSIONS_FISHING.." "..DAILY.."|r", nil, nil )
 		if Reputable_Data.global.dailyDungeons[ server ].dailyFishingQuest then
 			Reputable:addQuestToHTML( dailiesPage, Reputable_Data.global.dailyDungeons[ server ].dailyFishingQuest, nil, nil )
 		else
 			Reputable:addLineToHTML( dailiesPage, "p", "|cff808080[ "..UNKNOWN.." - Speak with Old Man Barlo in Terokkar Forest ]|r", true, nil)
-		end
-		Reputable:addLineToHTML( dailiesPage, "p", "<br/>", nil, nil )
-	end
-	
-	if Reputable_Data.global.guiShowWotlkFishingDaily then
-		Reputable:addLineToHTML( dailiesPage, "p", "|cffffff00"..PROFESSIONS_FISHING.." Wotlk "..DAILY.." |r", nil, nil )
-		if Reputable_Data.global.dailyDungeons[ server ].dailyWotlkFishingQuest then
-			Reputable:addQuestToHTML( dailiesPage, Reputable_Data.global.dailyDungeons[ server ].dailyWotlkFishingQuest, nil, nil )
-		else
-			Reputable:addLineToHTML( dailiesPage, "p", "|cff808080[ "..UNKNOWN.." - Speak with Marcia Chase in Dalaran ]|r", true, nil)
 		end
 		Reputable:addLineToHTML( dailiesPage, "p", "<br/>", nil, nil )
 	end
@@ -581,7 +606,7 @@ local function makeDataForAllPages()
 							local q = Reputable.questInfo[ questID ]
 							if q then
 								if Reputable.questInfo[ questID ][2] ~= Reputable.notFactionInt[ playerFaction ] then
-									local ingoredQuestForRep = ( Reputable.ingoredQuestsForRep and Reputable.ingoredQuestsForRep[questID] ) or false
+									local ingoredQuestForRep = ( Reputable.ignoredQuestsForRep and Reputable.ignoredQuestsForRep[questID] ) or false
 								--	if ingoredQuestForRep then debug( questID, ingoredQuestForRep ) end
 									local repInc = 0
 									if v.faction == q[5][1] then repInc = q[5][2] elseif v.faction == q[5][3] then repInc = q[5][4] end
@@ -1063,6 +1088,13 @@ local function minimapButtonClick( button )
 	if button=="LeftButton" then
 		if IsShiftKeyDown() then
 			local dungeonDailyText = ""
+			if Reputable_Data.global.dailyDungeons[ server ].dailyNormalDungeonLK then
+				dungeonDailyText = Reputable.instance[ Reputable.dailyInfo[ Reputable_Data.global.dailyDungeons[ server ].dailyNormalDungeonLK ].instanceID ].name
+			end
+			if Reputable_Data.global.dailyDungeons[ server ].dailyHeroicDungeonLK then
+				if dungeonDailyText ~= "" then dungeonDailyText = dungeonDailyText .. " & " end
+				dungeonDailyText = dungeonDailyText .. string.gsub( HEROIC_PREFIX, "%%s", Reputable.instance[ Reputable.dailyInfo[ Reputable_Data.global.dailyDungeons[ server ].dailyHeroicDungeonLK ].instanceID ].name )
+			end
 			if Reputable_Data.global.dailyDungeons[ server ].dailyNormalDungeon then
 				dungeonDailyText = Reputable.instance[ Reputable.dailyInfo[ Reputable_Data.global.dailyDungeons[ server ].dailyNormalDungeon ].instanceID ].name
 			end
