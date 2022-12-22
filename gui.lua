@@ -180,23 +180,27 @@ local classicFactionList = {
 }
 
 local wotlkFactionList = {
+	-- Alliance
+	{ faction = 1037 }, --Allance Vanguard
 	{ faction = 1050 }, --Valiance Expedition
-	{ faction = 1052 }, --Horde Expedition
-	{ faction = 1064 }, --The Taunka
-	{ faction = 1067 }, --The Hand of Vengeance
 	{ faction = 1068 }, --Explorers' League
-	{ faction = 1073 }, --The Kalu'ak
+	{ faction = 1126 }, --The Frostborn
+	{ faction = 1094 }, --The Silver Covenant
+	-- Horde
+	{ faction = 1052 }, --Horde Expedition
 	{ faction = 1085 }, --Warsong Offensive
+	{ faction = 1067 }, --The Hand of Vengeance
+	{ faction = 1064 }, --The Taunka
+	{ faction = 1124 }, --The Sunreavers
+	-- Both
 	{ faction = 1090 }, --Kirin Tor
 	{ faction = 1091 }, --The Wyrmrest Accord
-	{ faction = 1094 }, --The Silver Covenant
 	{ faction = 1098 }, --Knights of the Ebon Blade
-	{ faction = 1104 }, --Frenzyheart Tribe
-	{ faction = 1105 }, --The Oracles
 	{ faction = 1106 }, --Argent Crusade
 	{ faction = 1119 }, --The Sons of Hodir
-	{ faction = 1124 }, --The Sunreavers
-	{ faction = 1126 }, --The Frostborn
+	{ faction = 1073 }, --The Kalu'ak
+	{ faction = 1104 }, --Frenzyheart Tribe
+	{ faction = 1105 }, --The Oracles
 	
 	-- { faction = 1097	] = { name = "Wrath of the Lich King" },
 	-- { faction = 1117	] = { name = "Sholazar Basin" },
@@ -296,13 +300,22 @@ local function makeDungeonHTMLlist ()
 			end
 		end
 		if factionPage then
-			Reputable:addLineToHTML( factionPage, "p", Reputable.instanceZones[ Reputable.factionInfo[ factionID ].iz ].name .. " " .. factionLink, nil, nil )
+			if Reputable.factionInfo[ factionID ] and Reputable.factionInfo[ factionID ].iz then
+				Reputable:addLineToHTML( factionPage, "p", Reputable.instanceZones[ Reputable.factionInfo[ factionID ].iz ].name .. " " .. factionLink, nil, nil )
+			end
 		end
 		Reputable:addLineToHTML( Reputable.guiTabs[cat].html, "p", zoneInfo.name .. " " .. factionLink, nil, nil )
 		for _, dungeonID in ipairs ( zoneInfo.dungeons ) do
 			Reputable:getInstanceStatus( dungeonID )
 			Reputable:addDungeonToHTML( thisPage, dungeonID, 2, nil, nil )
-			if factionPage then Reputable:addDungeonToHTML( factionPage, dungeonID, 2, nil, nil ) end
+			if factionPage then
+				local d = Reputable.instance[ dungeonID ]
+				if d.rep and d.rep.normal.rep and d.rep.normal.rep > 0 then
+					Reputable:addDungeonToHTML( factionPage, dungeonID, 2, nil, nil )
+				else
+					Reputable:addDungeonToHTML( factionPage, dungeonID, 1, nil, nil )
+				end
+			end
 		end
 		if factionPage then Reputable:addLineToHTML( factionPage, "p", "<br/>", nil, nil ) end
 		Reputable:addLineToHTML( Reputable.guiTabs[zoneInfo.cat].html, "p", "<br/>", nil, nil )
@@ -438,13 +451,6 @@ local function makeDataForAllPages()
 		--GameTooltip:AddLine( " " )
 	end
 	Reputable:addLineToHTML( dailiesPage, "p", "<br/>", nil, nil )
-	
-	--	guiShowFishingDaily = true,
-	--	guiShowCookingDaily = true,
-	--	guiShowNormalDaily = true,
-	--	guiShowHeroicDaily = true,
-	--  guiShowNormalWotLKDaily = true,
-	--  guiShowHeroicWotLKDaily = true,
 
 	if Reputable_Data.global.guiShowNormalWotLKDaily then
 		Reputable:addLineToHTML( dailiesPage, "p", "|cffffff00Wotlk "..LFG_TYPE_DAILY_DUNGEON.."|r", nil, nil )
