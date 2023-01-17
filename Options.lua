@@ -26,7 +26,7 @@ end
 local function createSubTitle( o, name, text )
 	y = y - 20
 	--local o = optionsPanel.scrollChild
-	o[ "subtitle_" .. name ] = o:CreateFontString(nil, o, "GameFontWhite" )
+	o[ "subtitle_" .. name ] = o:CreateFontString(nil, "ARTWORK", "GameFontWhite" )
 	o[ "subtitle_" .. name ]:SetText( text )
 	o[ "subtitle_" .. name ]:SetPoint("TOPLEFT", 20, y )
 	y = y - 20
@@ -37,15 +37,15 @@ local function buildOptions()
 		loaded = true
 		local oc = optionsPanel
 		
-		oc.title = oc:CreateFontString(nil, oc, "GameFontNormalLarge" )
+		oc.title = oc:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge" )
 		oc.title:SetText(addonName )
 		oc.title:SetPoint("TOPLEFT",10,-10)
 		
-		oc.author = oc:CreateFontString(nil, oc, "GameFontDisable" )
+		oc.author = oc:CreateFontString(nil, "ARTWORK", "GameFontDisable" )
 		oc.author:SetText( string.gsub( PETITION_CREATOR, "%%s", author ) )
 		oc.author:SetPoint("LEFT", oc.title, "RIGHT", 10, 0)
 		
-		oc.version = oc:CreateFontString(nil, oc, "GameFontDisable" )
+		oc.version = oc:CreateFontString(nil, "ARTWORK", "GameFontDisable" )
 		oc.version:SetText( GAME_VERSION_LABEL .. ": " .. version )
 		oc.version:SetPoint("TOPRIGHT",-10,-10)
 		
@@ -93,7 +93,7 @@ local function buildOptions()
 		local chatframe = Reputable_Data.global.cframeOutputNum
 		o.dropDown = CreateFrame("FRAME", "ReputableCFrameDD", o, "UIDropDownMenuTemplate")
 		o.dropDown:SetPoint("TOPLEFT", 17, y - 10);
-		o.dropDown.text = o:CreateFontString(nil, o, "GameFontNormal" )
+		o.dropDown.text = o:CreateFontString(nil, "ARTWORK", "GameFontNormal" )
 		o.dropDown.text:SetPoint("LEFT", o.dropDown, "RIGHT", -10, 3);
 		o.dropDown.text:SetText("Output chatframe");
 		UIDropDownMenu_SetWidth(o.dropDown, 200)

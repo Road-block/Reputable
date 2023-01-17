@@ -51,7 +51,7 @@ Reputable.iconFrame:SetSize(32,32)
 Reputable.iconFrame:Hide()
 Reputable.iconFrame.texture = Reputable.iconFrame:CreateTexture()
 Reputable.iconFrame.texture:SetAllPoints()
-Reputable.iconFrame.heroic = Reputable.iconFrame:CreateFontString(nil, Reputable.iconFrame, "GameFontNormalLarge" )
+Reputable.iconFrame.heroic = Reputable.iconFrame:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge" )
 --Reputable.iconFrame.heroic:SetText("|TInterface\\LFGFrame\\UI-LFG-ICON-HEROIC:16:16:-2:8|t")--:0:0:32:32:0:0:0:0|t")
 Reputable.iconFrame.heroic:SetText("|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_8:8:8:-4:12|t")--:0:0:32:32:0:0:0:0|t")
 Reputable.iconFrame.heroic:SetPoint("TOPLEFT",0,-5)
@@ -2560,7 +2560,7 @@ questRepFrame:SetPoint( "LEFT", 5, 0 );
 questRepFrame:SetWidth( 100 );
 questRepFrame:SetHeight( 40 );
 questRepFrame:SetPoint( "TOP", QuestInfoRewardsFrame, "BOTTOM", 0, -10 );
-questRepFrame.text = questRepFrame:CreateFontString(nil, questRepFrame, "QuestFont" )
+questRepFrame.text = questRepFrame:CreateFontString(nil, "ARTWORK", "QuestFont" )
 questRepFrame.text:SetPoint("TOPLEFT")
 questRepFrame.text:SetJustifyH("LEFT");
 
@@ -2568,7 +2568,7 @@ local questLogRepFrame = CreateFrame( "Frame", "ReputableQuestLogReputationFrame
 questLogRepFrame:SetPoint( "LEFT", 5, 0 )
 questLogRepFrame:SetWidth( 100 );
 questLogRepFrame:SetHeight( 40 );
-questLogRepFrame.text = questLogRepFrame:CreateFontString(nil, questLogRepFrame, "QuestFont" )
+questLogRepFrame.text = questLogRepFrame:CreateFontString(nil, "ARTWORK", "QuestFont" )
 questLogRepFrame.text:SetPoint("TOPLEFT")
 questLogRepFrame.text:SetJustifyH("LEFT")
 
@@ -2612,14 +2612,7 @@ local childFrames = {
 local function getAnchorFrame()
 	local anchorFrame = QuestInfoRewardsFrame[childFrames[1]]
 	local lastFrame
-	if anchorFrame and not anchorFrame:IsVisible() then anchorFrame:Show() end
-	for i=2,7 do
-		lastFrame = QuestInfoRewardsFrame and QuestInfoRewardsFrame[childFrames[i]]
-		if lastFrame and anchorFrame and lastFrame:IsVisible()
-		and lastFrame:GetBottom() < anchorFrame:GetBottom() then
-			anchorFrame = lastFrame
-		end
-	end
+	if anchorFrame and not anchorFrame:IsVisible() then anchorFrame:GetParent():Show() end
 	for i=1,#QuestInfoRewardsFrame.RewardButtons do
 		lastFrame = _G["QuestInfoRewardsFrameQuestInfoItem".. i]
 		if lastFrame and anchorFrame and lastFrame:IsVisible() and lastFrame:GetBottom()
@@ -2627,10 +2620,10 @@ local function getAnchorFrame()
 			anchorFrame = lastFrame
 		end
 	end
-	for i=8,9 do
+	for i=2,9 do
 		lastFrame = QuestInfoRewardsFrame and QuestInfoRewardsFrame[childFrames[i]]
 		if lastFrame and anchorFrame and lastFrame:IsVisible()
-			and lastFrame:GetBottom() < anchorFrame:GetBottom() then
+		and lastFrame:GetBottom() < anchorFrame:GetBottom() then
 			anchorFrame = lastFrame
 		end
 	end
@@ -2654,7 +2647,6 @@ hooksecurefunc("QuestLog_UpdateQuestDetails", function()
 			if q[5][7] then questLogRepString = questLogRepString .. "\n" .. addFactionToQuestLog( q[5], 7, repTooHigh, q[12], q[4] ) end
 			
 			if questLogRepString ~= "" then 
-				questLogRepFrame:Show()
 			--	questLogRepFrame.text:SetTextColor( QuestFont:GetTextColor() )
 				local textColor = QuestLogQuestDescription and QuestLogQuestDescription:GetTextColor()
 				if not textColor then 
@@ -2665,9 +2657,10 @@ hooksecurefunc("QuestLog_UpdateQuestDetails", function()
 				local anchorFrame = getAnchorFrame()
 				if anchorFrame then
 					questLogRepFrame:ClearAllPoints()
-					C_Timer.After(0.9, function()
-						questLogRepFrame:SetPoint( "LEFT", QuestInfoDescriptionText, "LEFT", 0, 0)
+					questLogRepFrame:SetPoint( "LEFT", QuestInfoDescriptionText, "LEFT", 0, 0)
+					C_Timer.After(0.5, function()
 						questLogRepFrame:SetPoint( "TOP", anchorFrame, "BOTTOM", 0, -5 )
+						questLogRepFrame:Show()
 					end)
 				end
 			end
@@ -2690,7 +2683,7 @@ hooksecurefunc("QuestInfo_Display", function()
 				if QuestInfoRewardsFrame:IsVisible() then
 					questRepFrame:Show()
 				--	questRepFrame.text:SetTextColor( QuestInfoDescriptionText:GetTextColor() )
-					C_Timer.After(0.2, function() questRepFrame.text:SetTextColor( QuestInfoDescriptionText:GetTextColor() ) end )
+					C_Timer.After(1, function() questRepFrame.text:SetTextColor( QuestInfoDescriptionText:GetTextColor() ) end )
 					questRepFrame.text:SetText( questLogRepString )
 				else 
 					QuestInfoRewardText:SetText(GetRewardText().."\n\n\n" .. questLogRepString )
@@ -2728,7 +2721,7 @@ function Reputable:getAllFactions( initiate )
 					thisRepBar:HookScript('OnClick', repBarOnClick)
 					thisRepBar.ReputableScriptAdded = true
 					
-					thisRepBar.title = thisRepBar:CreateFontString(nil, thisRepBar, "GameFontNormalLarge" )
+					thisRepBar.title = thisRepBar:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge" )
 					thisRepBar.title:SetPoint("RIGHT",0,0)
 				end
 			end

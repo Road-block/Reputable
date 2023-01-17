@@ -52,7 +52,7 @@ end
 
 local function createSubTitle( frame, name, text )
 	frame.y = frame.y - 10
-	frame[ "subtitle_" .. name ] = frame:CreateFontString(nil, frame, "GameFontNormal" )
+	frame[ "subtitle_" .. name ] = frame:CreateFontString(nil, "ARTWORK", "GameFontNormal" )
 	frame[ "subtitle_" .. name ]:SetText( text )
 	frame[ "subtitle_" .. name ]:SetPoint("TOPLEFT", 10, frame.y )
 	frame.y = frame.y - 20
@@ -854,7 +854,11 @@ local function createGUI( page )
 	cont:SetMovable(true)
 	cont:SetClampedToScreen( true )
 	cont:SetResizable(true)
-	cont:SetMinResize(400,120);
+	if cont.SetResizeBounds then
+		cont:SetResizeBounds(400,120);
+	else
+		cont:SetMinResize(400,120);
+	end
 	cont:RegisterForDrag("LeftButton")
 	cont:SetScript("OnDragStart", function(self) self:StartMoving() end)
 	cont:SetScript("OnDragStop", function(self) self:StopMovingOrSizing() end)
@@ -908,15 +912,15 @@ local function createGUI( page )
 		Reputable:loadHTML(nil)
 	end)
 		
-	cont.title = cont:CreateFontString(nil, cont, "GameFontNormalLarge" )
+	cont.title = cont:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge" )
 	cont.title:SetText(addonName)
 	cont.title:SetPoint("TOPLEFT",10,-10)
 	
-	cont.version = cont:CreateFontString(nil, cont, "GameFontDisable" )
+	cont.version = cont:CreateFontString(nil, "ARTWORK", "GameFontDisable" )
 	cont.version:SetText( "(v" .. version ..")" )
 	cont.version:SetPoint("LEFT", cont.title, "RIGHT",5,0)
 	
-	cont.author = cont:CreateFontString(nil, cont, "GameFontDisable" )
+	cont.author = cont:CreateFontString(nil, "ARTWORK", "GameFontDisable" )
 	cont.author:SetText( string.gsub( PETITION_CREATOR, "%%s", author ) )
 	cont.author:SetPoint("LEFT", cont.version, "RIGHT", 5, 0)
 	
@@ -965,8 +969,8 @@ local function createGUI( page )
 		layer:SetPoint( "TOP", Reputable.gui.main, "TOP" );
 		layer:SetPoint( "BOTTOM", Reputable.gui.main, "BOTTOM" );
 	--	layer:SetFont('Fonts\\FRIZQT__.TTF', 12);
-		layer:SetFont(STANDARD_TEXT_FONT, 12);
-		layer:SetSpacing(6);
+		layer:SetFont("p", STANDARD_TEXT_FONT, 12, "");
+		layer:SetSpacing("p", 6);
 		layer.showItemTooltip = true
 		layer:SetScript("OnHyperlinkEnter", function(...) Reputable:OnHyperlinkEnter(...) end )
 		layer:SetScript("OnHyperlinkLeave", function() GameTooltip:Hide() Reputable.iconFrame:Hide() Reputable.iconFrame.heroic:Hide() end )

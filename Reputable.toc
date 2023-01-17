@@ -1,4 +1,4 @@
-## Interface: 30400
+## Interface: 30401
 ## Title: Reputable
 ## Author: Remulos' Revenga, Schoppi (wotlkc)
 ## Notes: Reputation enhancements and more!
