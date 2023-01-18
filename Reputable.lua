@@ -27,6 +27,8 @@ local waitingForData = {}
 local initiated = false;
 
 local version = GetAddOnMetadata(addonName, "Version") or 9999;
+local GetGossipAvailableQuests = _G.GetGossipAvailableQuests or (C_GossipInfo and C_GossipInfo.GetAvailableQuests)
+
 
 Reputable.debug = function ( text, ... )
 	if text == nil then return Reputable_Data.global.debug end
@@ -2648,11 +2650,11 @@ hooksecurefunc("QuestLog_UpdateQuestDetails", function()
 			
 			if questLogRepString ~= "" then 
 			--	questLogRepFrame.text:SetTextColor( QuestFont:GetTextColor() )
-				local textColor = QuestLogQuestDescription and QuestLogQuestDescription:GetTextColor()
-				if not textColor then 
-					textColor = QuestInfoDescriptionText and QuestInfoDescriptionText:GetTextColor()
+				local r,g,b,a = QuestLogQuestDescription and QuestLogQuestDescription:GetTextColor()
+				if not r then
+					r,g,b,a = QuestInfoDescriptionText and QuestInfoDescriptionText:GetTextColor()
 				end
-				questLogRepFrame.text:SetTextColor( textColor )
+				questLogRepFrame.text:SetTextColor( r or 1, g or 1, b or 1, a or 1 )
 				questLogRepFrame.text:SetText( questLogRepString )
 				local anchorFrame = getAnchorFrame()
 				if anchorFrame then
