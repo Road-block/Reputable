@@ -14,8 +14,13 @@ local function addCheckButton( name, text, tooltip, object, key, extraFunc )
 	local o = optionsPanel.scrollChild
 	o[ name ] = CreateFrame("CheckButton", nil, o, "UICheckButtonTemplate");
 	o[ name ]:SetPoint("TOPLEFT", 30, y);
-	o[ name ].text:SetText( text );
-	o[ name ].text:SetFontObject("GameFontNormal")
+	if o[ name ].text then
+		o[ name ].text:SetText( text );
+		o[ name ].text:SetFontObject("GameFontNormal")
+	else
+		o[ name ].Text:SetText( text );
+		o[ name ].Text:SetFontObject("GameFontNormal")
+	end
 	o[ name ]:SetScript("OnEnter", function(self) GameTooltip:SetOwner(self, "ANCHOR_RIGHT",0,-32);  GameTooltip:SetText( tooltip ); GameTooltip:Show() end)
 	o[ name ]:SetScript("OnLeave", function(self) GameTooltip:Hide() end)
 	if object[ key ] then o[ name ]:SetChecked(true) end
@@ -144,8 +149,9 @@ local function buildOptions()
 end
 
 function config:initOptions()
-	optionsPanel = CreateFrame("FRAME")
+	optionsPanel = CreateFrame("Frame")
 	optionsPanel.name = addonName
 	optionsPanel.refresh = function( self ) buildOptions() end
-	InterfaceOptions_AddCategory(optionsPanel)
+	--optionsPanel.refresh()
+	InterfaceOptions_AddCategory(optionsPanel, addonName)
 end
